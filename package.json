@@ -24,8 +24,10 @@
     "next": "^15.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-globe.gl": "^2.36.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
+    "three": "^0.180.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {

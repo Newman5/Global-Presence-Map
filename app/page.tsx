@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { LatestPost } from "~/app/_components/post";
+import { LatestPost } from "~/components/post";
 import { api, HydrateClient } from "~/trpc/server";
 
 export default async function Home() {
@@ -47,6 +47,19 @@ export default async function Home() {
 
           <LatestPost />
         </div>
+
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white">
+          <h1 className="text-4xl font-bold mb-4">🪐 Meeting Atlas</h1>
+          <p className="text-gray-400 mb-6">A visualization of global presence in community meetings.</p>
+          <a
+            href="/globe"
+            className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg"
+          >
+            View the Globe 🌍
+          </a>
+        </div>
+
+
       </main>
     </HydrateClient>
   );
