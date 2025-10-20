@@ -1,16 +1,24 @@
-//Writes new entries into src/data/members.json.
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { cityCoords } from "~/data/cityCoords";
 
 const filePath = path.join(process.cwd(), "src", "data", "members.json");
+
+// define a type for your data
+type Member = {
+  name: string;
+  city: string;
+  lat: number | null;
+  lng: number | null;
+};
 
 export async function GET() {
   try {
     if (!fs.existsSync(filePath)) {
       return NextResponse.json({ members: [] });
     }
-    const members = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    const members: Member[] = JSON.parse(fs.readFileSync(filePath, "utf8"));
     return NextResponse.json({ members });
   } catch (error) {
     console.error(error);
@@ -23,7 +31,10 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const { name, city } = await req.json();
+    // ✅ Safely parse and validate
+    const body = (await req.json()) as Partial<Member>;
+    const name = body.name?.trim();
+    const city = body.city?.trim();
 
     if (!name || !city) {
       return NextResponse.json(
@@ -32,12 +43,26 @@ export async function POST(req: Request) {
       );
     }
 
-    let members: any[] = [];
+    // ✅ Safely load members
+    let members: Member[] = [];
     if (fs.existsSync(filePath)) {
       members = JSON.parse(fs.readFileSync(filePath, "utf8"));
     }
 
-    members.push({ name, city });
+    // ✅ Lookup coordinates safely using ??
+    const location = cityCoords[city];
+    const lat = location?.lat ?? null;
+    const lng = location?.lng ?? null;
+
+    // ✅ Warn if city not found
+    if (!location) {
+      console.warn(
+        `⚠️ City '${city}' not found in cityCoords. Add it to cityCoords.ts.`,
+      );
+    }
+
+    members.push({ name, city, lat, lng });
+
     fs.writeFileSync(filePath, JSON.stringify(members, null, 2));
 
     return NextResponse.json({ message: `Added ${name} from ${city}` });

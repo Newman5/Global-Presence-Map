@@ -1,35 +1,30 @@
 'use client';
-import { useRef, useEffect } from "react";
-import Globe from "react-globe.gl";
-import meetingData from "../data/sample-meeting.json";
+
+import dynamic from "next/dynamic";
+import members from "../data/members.json";
+
+// Lazy load the globe library to avoid SSR issues
+const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
 export default function MeetingGlobe() {
-    const globeRef = useRef<any>(null);
-
-    useEffect(() => {
-        if (!globeRef.current) return;
-        globeRef.current.controls().autoRotate = true;
-        globeRef.current.controls().autoRotateSpeed = 0.5;
-    }, []);
-
-    const points = meetingData.participants.map((p) => ({
-        lat: p.lat,
-        lng: p.lng,
-        size: 0.4,
-        color: "orange",
-        label: `${p.name} (${p.city})`,
-    }));
+    // Filter valid coordinates and map to points
+    const points = members
+        .filter((m) => m.lat && m.lng)
+        .map((m) => ({
+            lat: m.lat,
+            lng: m.lng,
+            label: `${m.name} — ${m.city}`,
+        }));
 
     return (
-        <div className="w-full h-[600px]">
+        <div className="flex justify-center items-center h-[600px]">
             <Globe
-                ref={globeRef}
-                globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+                globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
                 backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
                 pointsData={points}
-                pointAltitude="size"
-                pointColor="color"
-                pointLabel="label"
+                pointAltitude={0.22}
+                pointColor={() => "orange"}
+                pointLabel={(d: any) => d.label}
             />
         </div>
     );
