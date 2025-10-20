@@ -52,6 +52,17 @@ export default async function Home() {
           <h1 className="text-4xl font-bold mb-4">🪐 Meeting Atlas</h1>
           <p className="text-gray-400 mb-6">A visualization of global presence in community meetings.</p>
           <a
+            href="/add-member"
+            className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg"
+          >
+            add members 🌍
+          </a>
+        </div>
+
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white">
+          
+          <p className="text-gray-400 mb-6">A visualization of global presence in community meetings.</p>
+          <a
             href="/globe"
             className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg"
           >

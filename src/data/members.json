@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Bill",
+    "city": "Berlin",
+    "lat": 52.52,
+    "lng": 13.405
+  },
+  {
+    "name": "Larry",
+    "city": "London",
+    "lat": 51.5072,
+    "lng": -0.1276
+  },
+  {
+    "name": "Terry",
+    "city": "Tokyo",
+    "lat": 35.6895,
+    "lng": 139.6917
+  },
+  {
+    "name": "tim",
+    "city": "Toronto",
+    "lat": 43.65107,
+    "lng": -79.347015
+  }
+]

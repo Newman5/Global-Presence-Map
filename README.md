@@ -1,3 +1,29 @@
+🌐 Global Presence Map
+
+Status: Public MVP in progress
+
+Description:
+Global Presence Map visualizes our community members across the world.
+It connects a simple input form (for adding name and city) to a real-time, interactive 3D globe view of member locations.
+
+Current features:
+
+Web form to add new members (/add-member)
+
+Automatic city-to-coordinate mapping (static lookup)
+
+members.json as shared data source
+
+Live visualization on the globe (/globe)
+
+Next milestones:
+
+Automatic geocoding for new cities
+
+Clickable globe markers with member info
+
+Dynamic refresh from data changes
+
 # Create T3 App
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
