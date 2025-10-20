@@ -2,12 +2,25 @@
 // page with a form to add a new member
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+type Member = { name: string; city: string };
 
 export default function AddMemberPage() {
     const [name, setName] = useState("");
     const [city, setCity] = useState("");
     const [message, setMessage] = useState("");
+    const [members, setMembers] = useState<Member[]>([]);
+
+    // Fetch existing members when the page loads
+    useEffect(() => {
+        async function fetchMembers() {
+            const res = await fetch("/api/add-member");
+            const data = await res.json();
+            setMembers(data.members || []);
+        }
+        fetchMembers();
+    }, []);
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -21,12 +34,17 @@ export default function AddMemberPage() {
         setMessage(data.message);
         setName("");
         setCity("");
+
+        // Refresh the member list
+        const updated = await fetch("/api/add-member");
+        const updatedData = await updated.json();
+        setMembers(updatedData.members || []);
     }
 
     return (
         <div className="max-w-md mx-auto p-8">
             <h1 className="text-2xl font-semibold mb-4">Add Member</h1>
-            <form onSubmit={handleSubmit} className="space-y-3">
+            <form onSubmit={handleSubmit} className="space-y-3 mb-6">
                 <input
                     type="text"
                     placeholder="Name"
@@ -50,7 +68,18 @@ export default function AddMemberPage() {
                     Add Member
                 </button>
             </form>
-            {message && <p className="mt-3 text-green-600">{message}</p>}
+
+            {message && <p className="mb-4 text-green-600">{message}</p>}
+
+            <h2 className="text-xl font-semibold mb-2">Current Members</h2>
+            {members.length === 0 && <p>No members yet.</p>}
+            <ul className="space-y-1">
+                {members.map((m, i) => (
+                    <li key={i} className="border-b pb-1">
+                        <span className="font-medium">{m.name}</span> – {m.city}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
