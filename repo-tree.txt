@@ -1,0 +1,78 @@
+.
+├── .env
+├── .env.example
+├── .gitignore
+├── .next
+│   ├── app-build-manifest.json
+│   ├── build
+│   │   └── chunks
+│   ├── build-manifest.json
+│   ├── cache
+│   │   ├── .rscinfo
+│   │   └── next-devtools-config.json
+│   ├── fallback-build-manifest.json
+│   ├── package.json
+│   ├── postcss.js
+│   ├── postcss.js.map
+│   ├── prerender-manifest.json
+│   ├── routes-manifest.json
+│   ├── server
+│   │   ├── app
+│   │   ├── app-paths-manifest.json
+│   │   ├── chunks
+│   │   ├── interception-route-rewrite-manifest.js
+│   │   ├── middleware-build-manifest.js
+│   │   ├── middleware-manifest.json
+│   │   ├── next-font-manifest.js
+│   │   ├── next-font-manifest.json
+│   │   ├── pages
+│   │   ├── pages-manifest.json
+│   │   ├── server-reference-manifest.js
+│   │   └── server-reference-manifest.json
+│   ├── static
+│   │   ├── chunks
+│   │   ├── development
+│   │   └── media
+│   ├── trace
+│   └── types
+│       ├── routes.d.ts
+│       └── validator.ts
+├── README.md
+├── app
+│   ├── api
+│   │   ├── meetings
+│   │   └── trpc
+│   ├── globe
+│   │   └── page.tsx
+│   ├── layout.tsx
+│   └── page.tsx
+├── docs
+│   └── project-board.md
+├── eslint.config.js
+├── next-env.d.ts
+├── next.config.js
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── prettier.config.js
+├── public
+│   └── favicon.ico
+├── repo-tree.txt
+├── src
+│   ├── components
+│   │   ├── MeetingGlobe.tsx
+│   │   └── post.tsx
+│   ├── data
+│   │   └── sample-meeting.json
+│   ├── env.js
+│   ├── server
+│   │   └── api
+│   ├── styles
+│   │   └── globals.css
+│   └── trpc
+│       ├── query-client.ts
+│       ├── react.tsx
+│       └── server.ts
+└── tsconfig.json
+
+27 directories, 48 files
