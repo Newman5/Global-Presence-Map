@@ -2,6 +2,7 @@
 // page with a form to add a new member
 'use client';
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 type Member = { name: string; city: string };
@@ -80,6 +81,13 @@ export default function AddMemberPage() {
                     </li>
                 ))}
             </ul>
+            <div>
+                <Link href="/" className="text-blue-600 hover:underline"> Back to Home</Link>
+                <Link href="/globe" className="text-blue-600 hover:underline"> see globe 🌍</Link>
+
+
+            </div>
         </div>
+        
     );
 }
