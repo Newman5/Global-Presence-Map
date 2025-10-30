@@ -22,5 +22,11 @@
     "city": "Toronto",
     "lat": 43.65107,
     "lng": -79.347015
+  },
+  {
+    "name": "Jill",
+    "city": "New York",
+    "lat": 40.7128,
+    "lng": -74.006
   }
 ]
