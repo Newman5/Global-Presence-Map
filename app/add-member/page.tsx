@@ -2,6 +2,7 @@
 // page with a form to add a new member
 'use client';
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 type Member = { name: string; city: string };
@@ -80,6 +81,23 @@ export default function AddMemberPage() {
                     </li>
                 ))}
             </ul>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 mt-8">
+                <Link
+                    className="flex max-w-xs flex-col gap-4 rounded-xl bg-gray-500 p-4 hover:bg-white/20"
+                    href="/globe"
+                >
+                    <h3 className="text-2xl font-bold">View Globe →</h3>
+
+                </Link>
+                <Link
+                    className="flex max-w-xs flex-col gap-4 rounded-xl bg-gray-500 p-4 hover:bg-white/20"
+                    href="/add-member"
+                >
+                    <h3 className="text-2xl font-bold">Add Members →</h3>
+
+                </Link>
+            </div>
         </div>
+        
     );
 }
