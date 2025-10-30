@@ -1,6 +1,8 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import dynamic from "next/dynamic";
+import { geocodeCity } from '~/lib/geocode';
+
 // Lazy load the globe library to avoid SSR issues
 const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
@@ -24,22 +26,43 @@ export default function MeetingGlobe({ participants }: { participants: any[] }) 
         }
     }, []);
 
-    const points = participants
-        .map((p) => {
-            const coords = cityCoords[p.city];
-            if (!coords) return null;
-            return {
-                lat: coords.lat,
-                lng: coords.lng,
-                size: 0.4,
-                color: 'orange',
-                label: `${p.name} (${p.city})`,
-            };
-        })
-        .filter(Boolean);
+    // --- Points ---
+    const points = useMemo(() => {
+        return participants
+            .map((p) => {
+                const coords = geocodeCity(p.city);
+                if (!coords) return null;
+                return {
+                    lat: coords.lat,
+                    lng: coords.lng,
+                    size: 0.5,
+                    color: 'orange',
+                    label: `${p.name} (${p.city})`,
+                };
+            })
+            .filter(Boolean);
+    }, [participants]);
+
+    // --- Arcs ---
+    const arcs = useMemo(() => {
+        if (points.length < 2) return [];
+        const links: any[] = [];
+        for (let i = 0; i < points.length; i++) {
+            for (let j = i + 1; j < points.length; j++) {
+                links.push({
+                    startLat: points[i].lat,
+                    startLng: points[i].lng,
+                    endLat: points[j].lat,
+                    endLng: points[j].lng,
+                    color: ['#ffaa00', '#ff6600']
+                });
+            }
+        }
+        return links;
+    }, [points]);
 
     return (
-        <div className="w-full h-[600px]">
+        <div className="w-full h-full">
             <Globe
                 ref={globeRef}
                 globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
@@ -48,6 +71,12 @@ export default function MeetingGlobe({ participants }: { participants: any[] }) 
                 pointAltitude="size"
                 pointColor="color"
                 pointLabel="label"
+                arcsData={arcs}
+                arcColor={'color'}
+                arcAltitude={0.2}
+                arcDashLength={0.5}
+                arcDashGap={0.02}
+                arcDashAnimateTime={3000}
             />
         </div>
     );
