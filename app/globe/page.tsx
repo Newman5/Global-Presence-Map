@@ -29,7 +29,7 @@ export default function GlobePage() {
     }
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-4">
-            <h1 className="text-3xl font-bold mb-4">🌍 Meeting Atlas</h1>
+            <h1 className="text-3xl font-bold mb-4">🌍 Global Presence Map</h1>
             <textarea
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
