@@ -1,45 +1,10 @@
 .
-├── .env
 ├── .env.example
 ├── .gitignore
-├── .next
-│   ├── app-build-manifest.json
-│   ├── build
-│   │   └── chunks
-│   ├── build-manifest.json
-│   ├── cache
-│   │   ├── .rscinfo
-│   │   └── next-devtools-config.json
-│   ├── fallback-build-manifest.json
-│   ├── package.json
-│   ├── postcss.js
-│   ├── postcss.js.map
-│   ├── prerender-manifest.json
-│   ├── routes-manifest.json
-│   ├── server
-│   │   ├── app
-│   │   ├── app-paths-manifest.json
-│   │   ├── chunks
-│   │   ├── interception-route-rewrite-manifest.js
-│   │   ├── middleware-build-manifest.js
-│   │   ├── middleware-manifest.json
-│   │   ├── next-font-manifest.js
-│   │   ├── next-font-manifest.json
-│   │   ├── pages
-│   │   ├── pages-manifest.json
-│   │   ├── server-reference-manifest.js
-│   │   └── server-reference-manifest.json
-│   ├── static
-│   │   ├── chunks
-│   │   ├── development
-│   │   └── media
-│   ├── trace
-│   └── types
-│       ├── routes.d.ts
-│       └── validator.ts
 ├── README.md
 ├── app
 │   ├── api
+│   │   ├── add-member
 │   │   ├── meetings
 │   │   └── trpc
 │   ├── globe
@@ -63,8 +28,12 @@
 │   │   ├── MeetingGlobe.tsx
 │   │   └── post.tsx
 │   ├── data
+│   │   ├── cityCoords.ts
+│   │   ├── members.json
 │   │   └── sample-meeting.json
 │   ├── env.js
+│   ├── lib
+│   │   └── geocode.ts
 │   ├── server
 │   │   └── api
 │   ├── styles
@@ -75,4 +44,4 @@
 │       └── server.ts
 └── tsconfig.json
 
-27 directories, 48 files
+16 directories, 28 files

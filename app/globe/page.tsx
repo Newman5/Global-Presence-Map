@@ -6,19 +6,20 @@ import { useState } from 'react';
 
 export default function GlobePage() {
     const [unknownCities, setUnknownCities] = useState<string[]>([]);
-
     const [inputText, setInputText] = useState('');
     const [participants, setParticipants] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
 
-    function handleRender() {
+    async function handleRender() {
+        setLoading(true);
         const lines = inputText.trim().split('\n');
         const parsed = lines
             .map(line => {
-                const [name, city] = line.split(',').map(s => s.trim());
-                if (!name || !city) return null;
-                return { name, city };
+                const [initial, city] = line.split(',').map(s => s.trim());
+                if (!initial || !city) return null;
+                return { name: initial, city };
             })
-            .filter(Boolean);
+            .filter(Boolean) as { name: string; city: string }[];
 
         const missing = parsed
             .filter(p => !geocodeCity(p.city))
@@ -26,6 +27,22 @@ export default function GlobePage() {
 
         setUnknownCities(missing);
         setParticipants(parsed);
+
+        // 📨 send each entry to /api/add-member
+        for (const p of parsed) {
+            console.log('Posting', p);
+            try {
+                await fetch('/api/add-member', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(p),
+                });
+            } catch (err) {
+                console.error('Error posting', p, err);
+            }
+        }
+
+        setLoading(false);
     }
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-4">
@@ -39,9 +56,10 @@ export default function GlobePage() {
             <div className="flex gap-4">
             <button
                 onClick={handleRender}
+                disabled={loading}
                 className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded"
             >
-                Render Globe
+                    {loading ? 'Submitting...' : 'Render Globe'}
             </button>
             <button
                 onClick={() => {
@@ -56,8 +74,7 @@ export default function GlobePage() {
             </div>
 
             {participants.length > 0 && (
-                //width half the container and centered
-                <div className="flex w-full justify-center">
+                <div className="flex w-full justify-center mt-6">
                     <div className="w-full max-w-5xl aspect-video sm:aspect-[16/9] rounded-lg overflow-hidden shadow-lg">
                         <MeetingGlobe participants={participants} />
                     </div>
