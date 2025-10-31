@@ -9,6 +9,7 @@ export default function GlobePage() {
     const [inputText, setInputText] = useState('');
     const [participants, setParticipants] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
+    const [meetingName, setMeetingName] = useState('');
 
     async function handleRender() {
         setLoading(true);
@@ -44,9 +45,102 @@ export default function GlobePage() {
 
         setLoading(false);
     }
+
+    // --- Export HTML directly in browser ---
+    function handleExport() {
+        if (participants.length === 0) return alert('Nothing to export!');
+
+        const now = new Date();
+        const dateStr = now.toISOString().split('T')[0];
+        const title = meetingName || 'Untitled Meeting';
+        const safeName = title.replace(/\s+/g, '-');
+
+        // Build points with resolved coords NOW (so the exported file is self-contained)
+        const points = participants
+            .map(p => {
+                const c = geocodeCity(p.city);
+                if (!c) return null; // skip unknowns
+                return {
+                    lat: c.lat,
+                    lng: c.lng,
+                    label: `${p.name} (${p.city})`,
+                    color: 'orange'
+                };
+            })
+            .filter(Boolean) as Array<{ lat: number; lng: number; label: string; color: string }>;
+
+        if (points.length === 0) {
+            alert('No valid cities to export. Please fix unknown cities.');
+            return;
+        }
+
+        // Build arcs (all-to-all for now)
+        const arcs = [];
+        for (let i = 0; i < points.length; i++) {
+            for (let j = i + 1; j < points.length; j++) {
+                arcs.push({
+                    startLat: points[i]!.lat,
+                    startLng: points[i]!.lng,
+                    endLat: points[j]!.lat,
+                    endLng: points[j]!.lng,
+                    color: ['#ffaa00', '#ff6600']
+                });
+            }
+        }
+
+        const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>${title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html,body { margin:0; height:100%; background:black; }
+    #globe { width:100vw; height:100vh; overflow:hidden; }
+    .overlay { position:absolute; top:12px; left:12px; color:white; font-family:sans-serif; font-weight:bold; }
+  </style>
+  <script src="https://unpkg.com/three"></script>
+  <script src="https://unpkg.com/globe.gl"></script>
+</head>
+<body>
+  <div id="globe"></div>
+  <div class="overlay">${title} — ${dateStr}</div>
+  <script>
+    const data = ${JSON.stringify(participants)};
+    const points = data.map(p => ({ lat: p.lat, lng: p.lng, label: p.name + ' (' + p.city + ')', color: 'orange' }));
+    const arcs = [];
+    for (let i=0;i<points.length;i++) {
+      for (let j=i+1;j<points.length;j++) {
+        arcs.push({ startLat: points[i].lat, startLng: points[i].lng, endLat: points[j].lat, endLng: points[j].lng, color: ['#ffaa00','#ff6600'] });
+      }
+    }
+    const globe = Globe()
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+      .pointsData(points).pointColor('color').pointLabel('label')
+      .arcsData(arcs).arcColor('color').arcAltitude(0.2).arcDashLength(0.5).arcDashGap(0.02).arcDashAnimateTime(3000);
+    globe(document.getElementById('globe'));
+  </script>
+</body>
+</html>`;
+
+        const blob = new Blob([html], { type: 'text/html' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${safeName}-${dateStr}.html`;
+        link.click();
+    }
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-4">
             <h1 className="text-3xl font-bold mb-4">🌍 Global Presence Map</h1>
+            <input
+                type="text"
+                value={meetingName}
+                onChange={(e) => setMeetingName(e.target.value)}
+                placeholder="Optional meeting name"
+                className="w-full max-w-xl p-2 rounded bg-gray-800 text-white placeholder-gray-500"
+            />
             <textarea
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
@@ -71,6 +165,12 @@ export default function GlobePage() {
             >
                 Clear
             </button>
+                <button
+                    onClick={handleExport}
+                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded"
+                >
+                    Export Globe
+                </button>
             </div>
 
             {participants.length > 0 && (
