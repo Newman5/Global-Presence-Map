@@ -59,7 +59,8 @@ export default function GlobePage() {
         const points = participants
             .map(p => {
                 const c = geocodeCity(p.city);
-                if (!c) return null; // skip unknowns
+                if (!c) return null;
+                if (isNaN(c.lat) || isNaN(c.lng)) return null; // skip unknowns
                 return {
                     lat: c.lat,
                     lng: c.lng,
@@ -67,12 +68,17 @@ export default function GlobePage() {
                     color: 'orange'
                 };
             })
-            .filter(Boolean) as Array<{ lat: number; lng: number; label: string; color: string }>;
+            .filter((p): p is { lat: number; lng: number; label: string; color: string } => Boolean(p));
 
         if (points.length === 0) {
             alert('No valid cities to export. Please fix unknown cities.');
             return;
         }
+        if (!points.length) {
+            alert('No valid coordinates. Please correct city names before exporting.');
+            return;
+        }
+
 
         // Build arcs (all-to-all for now)
         const arcs = [];
@@ -95,20 +101,65 @@ export default function GlobePage() {
   <meta charset="utf-8" />
   <title>${title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    html,body { margin:0; height:100%; background:black; }
-    #globe { width:100vw; height:100vh; overflow:hidden; }
-    .overlay { position:absolute; top:12px; left:12px; color:white; font-family:sans-serif; font-weight:bold; }
+<style>
+    /* layout */
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: black;
+      display: flex;
+      flex-direction: column;
+    }
+    /* container centers globe and allows footer/other content later */
+    .container {
+      position: relative;
+      display: flex;
+      flex: 1 1 auto;
+      align-items: stretch;
+      justify-content: center;
+      min-height: 0; /* allow children to size correctly inside flex */
+    }
+    /* globe takes full width and adapts height on mobile.
+       max-height uses device viewport height (100dvh) to avoid address-bar issues on mobile */
+    #globe {
+      width: 100%;
+      height: 100%;
+      max-height: 100dvh;
+      min-height: 40vh;
+      overflow: hidden;
+      flex: 1 1 auto;
+      position: relative;
+    }
+    /* overlay positioned inside container; responsive font-size */
+    .overlay {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      color: white;
+      font-family: sans-serif;
+      font-weight: bold;
+      background: rgba(0,0,0,0.35);
+      padding: 6px 8px;
+      border-radius: 6px;
+      z-index: 2;
+      font-size: clamp(12px, 2.5vw, 16px);
+      pointer-events: none;
+    }
+    /* smaller tweaks for very small screens */
+    @media (max-width: 420px) {
+      .overlay { left: 8px; top: 8px; padding: 4px 6px; }
+      #globe { min-height: 50vh; }
+    }
   </style>
-  <script src="https://unpkg.com/three"></script>
   <script src="https://unpkg.com/globe.gl"></script>
 </head>
 <body>
+<section class="container">
   <div id="globe"></div>
   <div class="overlay">${title} — ${dateStr}</div>
+  </section>
   <script>
-    const data = ${JSON.stringify(participants)};
-    const points = data.map(p => ({ lat: p.lat, lng: p.lng, label: p.name + ' (' + p.city + ')', color: 'orange' }));
+    const points = ${JSON.stringify(points)};
     const arcs = [];
     for (let i=0;i<points.length;i++) {
       for (let j=i+1;j<points.length;j++) {
@@ -116,8 +167,8 @@ export default function GlobePage() {
       }
     }
     const globe = Globe()
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-      .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
       .pointsData(points).pointColor('color').pointLabel('label')
       .arcsData(arcs).arcColor('color').arcAltitude(0.2).arcDashLength(0.5).arcDashGap(0.02).arcDashAnimateTime(3000);
     globe(document.getElementById('globe'));

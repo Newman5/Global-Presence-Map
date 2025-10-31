@@ -1,5 +1,5 @@
 export const cityCoords: Record<string, { lat: number; lng: number }> = {
-  Taipei: { lat: 25.033, lng: 121.565 },
+  taipei: { lat: 25.033, lng: 121.565 },
   bangalore: { lat: 12.9716, lng: 77.5946 },
   "New York": { lat: 40.7128, lng: -74.006 },
   london: { lat: 51.5072, lng: -0.1276 },
