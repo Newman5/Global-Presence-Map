@@ -74,8 +74,28 @@ export async function POST(req: Request) {
       lng = FALLBACK_COORDS.lng;
       source = "fallback";
     }
+    // ✅ Deduplicate by name + city (case-insensitive)
+    const exists = members.some(
+      (m) =>
+        m.name.toLowerCase() === name.toLowerCase() &&
+        m.city.toLowerCase() === city.toLowerCase(),
+    );
 
-    members.push({ name, city, lat, lng });
+    if (exists) {
+      return NextResponse.json(
+        { message: "Member already exists" },
+        { status: 409 },
+      );
+    }
+
+    // ✅ Add new member
+    const newMember: Member = {
+      name,
+      city,
+      lat,
+      lng,
+    };
+    members.push(newMember);
 
     fs.writeFileSync(filePath, JSON.stringify(members, null, 2));
 
@@ -84,6 +104,7 @@ export async function POST(req: Request) {
         source === "fallback"
           ? `Added ${name} from ${city} (fallback location)`
           : `Added ${name} from ${city}`,
+      member: newMember,
     });
   } catch (error) {
     console.error(error);
