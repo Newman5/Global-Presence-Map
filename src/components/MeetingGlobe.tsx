@@ -6,22 +6,36 @@ import { geocodeCity } from '~/lib/geocode';
 // Lazy load the globe library to avoid SSR issues
 const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
-// Temporary mock coordinates for demo purposes
-// const cityCoords: Record<string, { lat: number; lng: number }> = {
-//     Taipei: { lat: 25.033, lng: 121.565 },
-//     Bangalore: { lat: 12.9716, lng: 77.5946 },
-//     'New York': { lat: 40.7128, lng: -74.006 },
-//     London: { lat: 51.5072, lng: -0.1276 },
-//     Tokyo: { lat: 35.6762, lng: 139.6503 },
-// };
+interface Participant {
+    name: string;
+    city?: string;
+}
 
+interface PointData {
+    lat: number;
+    lng: number;
+    size: number;
+    color: string;
+    label: string;
+}
 
-export default function MeetingGlobe({ participants }: { participants: any[] }) {
+interface ArcData {
+    startLat: number;
+    startLng: number;
+    endLat: number;
+    endLng: number;
+    color: string[];
+}
+
+export default function MeetingGlobe({ participants }: { participants: Participant[] }) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const globeRef = useRef<any>(null);
 
     useEffect(() => {
         if (globeRef.current) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
             globeRef.current.controls().autoRotate = true;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
             globeRef.current.controls().autoRotateSpeed = 0.5;
         }
     }, []);
@@ -29,7 +43,7 @@ export default function MeetingGlobe({ participants }: { participants: any[] }) 
     // --- Points ---
     const points = useMemo(() => {
         return participants
-            .map((p) => {
+            .map((p): PointData | null => {
                 const coords = geocodeCity(p.city);
                 if (!coords) return null;
                 return {
@@ -37,23 +51,26 @@ export default function MeetingGlobe({ participants }: { participants: any[] }) 
                     lng: coords.lng,
                     size: 0.5,
                     color: 'orange',
-                    label: `${p.name} (${p.city})`,
+                    label: `${p.name} (${p.city ?? 'Unknown'})`,
                 };
             })
-            .filter(Boolean);
+            .filter((p): p is PointData => p !== null);
     }, [participants]);
 
     // --- Arcs ---
-    const arcs = useMemo(() => {
+    const arcs = useMemo((): ArcData[] => {
         if (points.length < 2) return [];
-        const links: any[] = [];
+        const links: ArcData[] = [];
         for (let i = 0; i < points.length; i++) {
             for (let j = i + 1; j < points.length; j++) {
+                const pointI = points[i];
+                const pointJ = points[j];
+                if (!pointI || !pointJ) continue;
                 links.push({
-                    startLat: points[i].lat,
-                    startLng: points[i].lng,
-                    endLat: points[j].lat,
-                    endLng: points[j].lng,
+                    startLat: pointI.lat,
+                    startLng: pointI.lng,
+                    endLat: pointJ.lat,
+                    endLng: pointJ.lng,
                     color: ['#ffaa00', '#ff6600']
                 });
             }

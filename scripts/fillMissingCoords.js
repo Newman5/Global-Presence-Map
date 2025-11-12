@@ -11,7 +11,17 @@ const membersPath = path.join(process.cwd(), 'src', 'data', 'members.json')
 const coordsPath = path.join(process.cwd(), 'src', 'data', 'cityCoords.ts')
 
 /**
+ * Type guard to filter out undefined values
+ * @param {string | undefined} value
+ * @returns {value is string}
+ */
+function isValidCity(value) {
+    return typeof value === 'string' && value.length > 0
+}
+
+/**
  * @param {string} city
+ * @returns {Promise<{lat: string, lng: string} | null>}
  */
 async function getCoords(city) {
     const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
@@ -20,10 +30,13 @@ async function getCoords(city) {
     const res = await fetch(url, {
         headers: { 'User-Agent': 'GlobalPresenceMap/1.0 (fillMissingCoords)' },
     })
+    /** @type {unknown} */
     const data = await res.json()
-    if (!data.length) return null
-    const lat = parseFloat(data[0].lat).toFixed(4)
-    const lng = parseFloat(data[0].lon).toFixed(4)
+    if (!Array.isArray(data) || !data.length) return null
+    const first = data[0]
+    if (!first || typeof first !== 'object' || !('lat' in first) || !('lon' in first)) return null
+    const lat = parseFloat(String(first.lat)).toFixed(4)
+    const lng = parseFloat(String(first.lon)).toFixed(4)
     return { lat, lng }
 }
 
@@ -37,11 +50,14 @@ async function main() {
         process.exit(1)
     }
 
+    /** @type {Array<{name: string, city?: string}>} */
     const members = JSON.parse(fs.readFileSync(membersPath, 'utf8'))
     const existingText = fs.readFileSync(coordsPath, 'utf8').toLowerCase()
 
     // collect all unique cities
-    const cities = [...new Set(members.map(m => m.city?.trim().toLowerCase()).filter(Boolean))]
+    const allCities = members.map((/** @type {{city?: string}} */ m) => m.city?.trim().toLowerCase())
+    const filteredCities = allCities.filter(isValidCity)
+    const cities = [...new Set(filteredCities)]
 
     const missing = cities.filter(city => !existingText.includes(`${city}:`))
     if (!missing.length) {
