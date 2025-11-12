@@ -47,7 +47,7 @@ export default function GlobePage() {
     }
 
     // --- Export HTML directly in browser ---
-    function handleExport() {
+    async function handleExport() {
         if (participants.length === 0) return alert('Nothing to export!');
 
         const now = new Date();
@@ -174,10 +174,34 @@ export default function GlobePage() {
 </html>`;
 
         const blob = new Blob([html], { type: 'text/html' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `${safeName}-${dateStr}.html`;
-        link.click();
+        //build a file in the public/exports folder via post to api/save-meeting
+        const filename = `${safeName}-${dateStr}.html`;
+        try {
+            const res = await fetch('/api/save-meeting', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ html, filename }),
+            });
+
+            if (res.ok) {
+                const { path } = await res.json();
+                alert(`✅ Saved to server: ${path}`);
+                return;
+            }
+            throw new Error(`Server responded ${res.status}`);
+        } catch (err) {
+            console.warn('⚠️ Save to server failed, falling back to download:', err);
+
+            // 🪄 Fallback for static GitHub Pages mode
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            alert(`💾 Downloaded ${filename}`);
+        }
     }
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-4">
@@ -196,23 +220,23 @@ export default function GlobePage() {
                 className="w-full max-w-xl h-48 p-3 rounded bg-gray-800 text-white mb-4"
             />
             <div className="flex gap-4">
-            <button
-                onClick={handleRender}
-                disabled={loading}
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded"
-            >
+                <button
+                    onClick={handleRender}
+                    disabled={loading}
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded"
+                >
                     {loading ? 'Submitting...' : 'Render Globe'}
-            </button>
-            <button
-                onClick={() => {
-                    setInputText('');
-                    setParticipants([]);
-                    setUnknownCities([]);
-                }}
-                className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded"
-            >
-                Clear
-            </button>
+                </button>
+                <button
+                    onClick={() => {
+                        setInputText('');
+                        setParticipants([]);
+                        setUnknownCities([]);
+                    }}
+                    className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded"
+                >
+                    Clear
+                </button>
                 <button
                     onClick={handleExport}
                     className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded"
