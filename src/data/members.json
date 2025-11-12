@@ -436,5 +436,23 @@
     "city": "newyork",
     "lat": 40.7127,
     "lng": -74.006
+  },
+  {
+    "name": "i",
+    "city": "new york",
+    "lat": 40.7127,
+    "lng": -74.006
+  },
+  {
+    "name": "o",
+    "city": "paris",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "name": "u",
+    "city": "london",
+    "lat": null,
+    "lng": null
   }
 ]
