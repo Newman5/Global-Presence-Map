@@ -40,7 +40,7 @@ export default function MeetingGlobe({ participants }: { participants: any[] }) 
                     label: `${p.name} (${p.city})`,
                 };
             })
-            .filter(Boolean);
+            .filter((p): p is NonNullable<typeof p> => p !== null);
     }, [participants]);
 
     // --- Arcs ---
@@ -49,11 +49,14 @@ export default function MeetingGlobe({ participants }: { participants: any[] }) 
         const links: any[] = [];
         for (let i = 0; i < points.length; i++) {
             for (let j = i + 1; j < points.length; j++) {
+                const pointI = points[i];
+                const pointJ = points[j];
+                if (!pointI || !pointJ) continue;
                 links.push({
-                    startLat: points[i].lat,
-                    startLng: points[i].lng,
-                    endLat: points[j].lat,
-                    endLng: points[j].lng,
+                    startLat: pointI.lat,
+                    startLng: pointI.lng,
+                    endLat: pointJ.lat,
+                    endLng: pointJ.lng,
                     color: ['#ffaa00', '#ff6600']
                 });
             }

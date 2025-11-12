@@ -10,6 +10,9 @@ import fetch from 'node-fetch'
 const membersPath = path.join(process.cwd(), 'src', 'data', 'members.json')
 const coordsPath = path.join(process.cwd(), 'src', 'data', 'cityCoords.ts')
 
+/**
+ * @param {string} city
+ */
 async function getCoords(city) {
     const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
         city
@@ -17,6 +20,7 @@ async function getCoords(city) {
     const res = await fetch(url, {
         headers: { 'User-Agent': 'GlobalPresenceMap/1.0 (fillMissingCoords)' },
     })
+    /** @type {any} */
     const data = await res.json()
     if (!data.length) return null
     const lat = parseFloat(data[0].lat).toFixed(4)
@@ -34,13 +38,14 @@ async function main() {
         process.exit(1)
     }
 
+    /** @type {any[]} */
     const members = JSON.parse(fs.readFileSync(membersPath, 'utf8'))
     const existingText = fs.readFileSync(coordsPath, 'utf8').toLowerCase()
 
     // collect all unique cities
-    const cities = [...new Set(members.map(m => m.city?.trim().toLowerCase()).filter(Boolean))]
+    const cities = [...new Set(members.map((/** @type {any} */ m) => m.city?.trim().toLowerCase()).filter(Boolean))]
 
-    const missing = cities.filter(city => !existingText.includes(`${city}:`))
+    const missing = cities.filter((/** @type {string} */ city) => !existingText.includes(`${city}:`))
     if (!missing.length) {
         console.log('✅ All cities already have coordinates.')
         return
