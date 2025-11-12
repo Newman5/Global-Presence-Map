@@ -27,4 +27,5 @@ export const cityCoords: Record<string, { lat: number; lng: number }> = {
   "prince of wales island": { lat: 55.631944, lng: -132.9075 },
   "forest grove": { lat: 45.519, lng: -123.1111 },
   oregon: { lat: 43.9793, lng: -120.7373 },
+  houston: { lat: 29.7589, lng: -95.3677 },
 };

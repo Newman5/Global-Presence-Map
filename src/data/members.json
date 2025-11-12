@@ -76,5 +76,35 @@
     "city": "Paris",
     "lat": 48.8566,
     "lng": 2.3522
+  },
+  {
+    "name": "G",
+    "city": "Houston",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "T",
+    "city": "Tallinn",
+    "lat": 59.4372,
+    "lng": 24.7573
+  },
+  {
+    "name": "R",
+    "city": "San Francisco",
+    "lat": 37.7793,
+    "lng": -122.4193
+  },
+  {
+    "name": "J",
+    "city": "Prince Of Wales Island",
+    "lat": 55.631944,
+    "lng": -132.9075
+  },
+  {
+    "name": "N",
+    "city": "New York",
+    "lat": 40.7127,
+    "lng": -74.006
   }
 ]
