@@ -12,7 +12,5 @@ export function geocodeCity(
   const coords = cityCoords[key] || cityCoords[city.trim()];
   if (!coords) return null;
 
-  const lat = Number(coords.lat);
-  const lng = Number(coords.lng);
-  return isNaN(lat) || isNaN(lng) ? null : { lat, lng };
+  return { lat: coords.lat, lng: coords.lng };
 }

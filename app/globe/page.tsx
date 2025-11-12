@@ -74,10 +74,7 @@ export default function GlobePage() {
             alert('No valid cities to export. Please fix unknown cities.');
             return;
         }
-        if (!points.length) {
-            alert('No valid coordinates. Please correct city names before exporting.');
-            return;
-        }
+        // (Removed unreachable condition: already checked above)
 
 
         // Build arcs (all-to-all for now)

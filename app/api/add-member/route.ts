@@ -15,7 +15,7 @@ type Member = {
   source?: string;
 };
 
-// ✅ Default fallback coordinates (Bermuda Triangle!)
+// ✅ Default fallback coordinates: (25.0, -71.0) is in the Atlantic Ocean, often humorously referred to as the "Bermuda Triangle" and used as a placeholder when a city's coordinates are unknown.
 const FALLBACK_COORDS = { lat: 25.0, lng: -71.0 };
 
 export async function GET() {

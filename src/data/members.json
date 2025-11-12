@@ -1,25 +1,25 @@
 [
   {
     "name": "R",
-    "city": "Sanfrancisco",
+    "city": "San Francisco",
     "lat": 37.7749,
     "lng": -122.4194
   },
   {
     "name": "N",
-    "city": "Newyork",
+    "city": "New York",
     "lat": 40.7127,
     "lng": -74.006
   },
   {
     "name": "T",
-    "city": "Talin",
+    "city": "Tallinn",
     "lat": 59.4372,
     "lng": 24.7573
   },
   {
     "name": "J",
-    "city": "\"prince Of Wales Island\"",
+    "city": "Prince Of Wales Island",
     "lat": 55.631944,
     "lng": -132.9075
   },
@@ -80,8 +80,8 @@
   {
     "name": "G",
     "city": "Houston",
-    "lat": 25,
-    "lng": -71
+    "lat": 29.76,
+    "lng": -95.37
   },
   {
     "name": "T",
@@ -106,5 +106,23 @@
     "city": "New York",
     "lat": 40.7127,
     "lng": -74.006
+  },
+  {
+    "name": "L",
+    "city": "Taipei",
+    "lat": 25.033,
+    "lng": 121.565
+  },
+  {
+    "name": "M",
+    "city": "Paris",
+    "lat": 48.8566,
+    "lng": 2.3522
+  },
+  {
+    "name": "N",
+    "city": "London",
+    "lat": 51.5072,
+    "lng": -0.1276
   }
 ]
