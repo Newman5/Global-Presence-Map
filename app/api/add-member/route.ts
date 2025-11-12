@@ -23,7 +23,8 @@ export async function GET() {
     if (!fs.existsSync(filePath)) {
       return NextResponse.json({ members: [] });
     }
-    const members: Member[] = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    const members: Member[] = JSON.parse(fileContent) as Member[];
     return NextResponse.json({ members });
   } catch (error) {
     console.error(error);
@@ -37,7 +38,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     // ✅ Safely parse and validate
-    const body = (await req.json()) as Partial<Member>;
+    const body = (await req.json()) as { name?: string; city?: string };
     const name = normalizeInput(body.name);
     const city = normalizeInput(body.city);
 
@@ -51,7 +52,8 @@ export async function POST(req: Request) {
     // ✅ Safely load members
     let members: Member[] = [];
     if (fs.existsSync(filePath)) {
-      members = JSON.parse(fs.readFileSync(filePath, "utf8"));
+      const fileContent = fs.readFileSync(filePath, "utf8");
+      members = JSON.parse(fileContent) as Member[];
     }
 
     // ✅ Lookup coordinates safely using ??

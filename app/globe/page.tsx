@@ -4,10 +4,15 @@ import { geocodeCity } from "~/lib/geocode";
 import MeetingGlobe from "../../src/components/MeetingGlobe";
 import { useState } from 'react';
 
+interface Participant {
+    name: string;
+    city: string;
+}
+
 export default function GlobePage() {
     const [unknownCities, setUnknownCities] = useState<string[]>([]);
     const [inputText, setInputText] = useState('');
-    const [participants, setParticipants] = useState<any[]>([]);
+    const [participants, setParticipants] = useState<Participant[]>([]);
     const [loading, setLoading] = useState(false);
     const [meetingName, setMeetingName] = useState('');
     const [lastExportUrl, setLastExportUrl] = useState<string | null>(null);

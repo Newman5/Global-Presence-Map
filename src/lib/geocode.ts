@@ -9,7 +9,7 @@ export function geocodeCity(
   const key = city.trim().replace(/\s+/g, '');
   if (!key) return null; // still empty after trimming
 
-  const coords = cityCoords[key] || cityCoords[city.trim()];
+  const coords = cityCoords[key] ?? cityCoords[city.trim()];
   if (!coords) return null;
 
   return { lat: coords.lat, lng: coords.lng };
