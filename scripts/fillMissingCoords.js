@@ -20,8 +20,12 @@ function isValidCity(value) {
 }
 
 /**
+ * @typedef {{ lat: string, lon: string }} NominatimResult
+ */
+
+/**
  * @param {string} city
- * @returns {Promise<{lat: string, lng: string} | null>}
+ * @returns {Promise<{lat: number, lng: number} | null>}
  */
 async function getCoords(city) {
     const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
@@ -30,14 +34,20 @@ async function getCoords(city) {
     const res = await fetch(url, {
         headers: { 'User-Agent': 'GlobalPresenceMap/1.0 (fillMissingCoords)' },
     })
+    if (!res.ok) {
+        console.warn(`HTTP ${res.status} for ${city}`)
+        return null
+    }
     /** @type {unknown} */
     const data = await res.json()
-    if (!Array.isArray(data) || !data.length) return null
+    // data is expected to be NominatimResult[]
+    if (!Array.isArray(data) || data.length === 0) return null
     const first = data[0]
     if (!first || typeof first !== 'object' || !('lat' in first) || !('lon' in first)) return null
-    const lat = parseFloat(String(first.lat)).toFixed(4)
-    const lng = parseFloat(String(first.lon)).toFixed(4)
-    return { lat, lng }
+    const lat = Number.parseFloat(String(first.lat))
+    const lng = Number.parseFloat(String(first.lon))
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null
+    return { lat: Number(lat.toFixed(4)), lng: Number(lng.toFixed(4)) }
 }
 
 async function main() {
@@ -52,14 +62,19 @@ async function main() {
 
     /** @type {Array<{name: string, city?: string}>} */
     const members = JSON.parse(fs.readFileSync(membersPath, 'utf8'))
-    const existingText = fs.readFileSync(coordsPath, 'utf8').toLowerCase()
+    const existingText = fs.readFileSync(coordsPath, 'utf8')
 
     // collect all unique cities
     const allCities = members.map((/** @type {{city?: string}} */ m) => m.city?.trim().toLowerCase())
     const filteredCities = allCities.filter(isValidCity)
     const cities = [...new Set(filteredCities)]
 
-    const missing = cities.filter(city => !existingText.includes(`${city}:`))
+    // safer regex check for key presence: matches 'city': or "city" : (case-insensitive)
+    const missing = cities.filter((city) => {
+        const re = new RegExp(`['"]${city.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"]\\s*:`, 'i')
+        return !re.test(existingText)
+    })
+
     if (!missing.length) {
         console.log('✅ All cities already have coordinates.')
         return
@@ -80,8 +95,7 @@ async function main() {
         } else {
             console.warn(`⚠️  No coordinates found for '${city}'`)
         }
-        // respect Nominatim rate limit (max 1 per sec)
-        await new Promise(r => setTimeout(r, 1200))
+        await new Promise((r) => setTimeout(r, 1200))
     }
 
     if (additions.length) {
