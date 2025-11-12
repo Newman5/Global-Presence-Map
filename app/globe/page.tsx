@@ -10,6 +10,7 @@ export default function GlobePage() {
     const [participants, setParticipants] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [meetingName, setMeetingName] = useState('');
+    const [lastExportUrl, setLastExportUrl] = useState<string | null>(null);
 
     async function handleRender() {
         setLoading(true);
@@ -173,9 +174,11 @@ export default function GlobePage() {
 </body>
 </html>`;
 
-        const blob = new Blob([html], { type: 'text/html' });
+
         //build a file in the public/exports folder via post to api/save-meeting
+
         const filename = `${safeName}-${dateStr}.html`;
+        const exportPath = `/exports/${filename}`; // where the file will be if saved on server
         try {
             const res = await fetch('/api/save-meeting', {
                 method: 'POST',
@@ -184,8 +187,8 @@ export default function GlobePage() {
             });
 
             if (res.ok) {
-                const { path } = await res.json();
-                alert(`✅ Saved to server: ${path}`);
+                setLastExportUrl(exportPath);
+                alert(`✅ Saved to server: ${exportPath}`);
                 return;
             }
             throw new Error(`Server responded ${res.status}`);
@@ -200,6 +203,7 @@ export default function GlobePage() {
             a.download = filename;
             a.click();
             URL.revokeObjectURL(url);
+            setLastExportUrl(exportPath);
             alert(`💾 Downloaded ${filename}`);
         }
     }
@@ -243,7 +247,20 @@ export default function GlobePage() {
                 >
                     Export Globe
                 </button>
+            
             </div>
+            {lastExportUrl && (
+                <div className="mt-6">
+                    <a
+                        href={lastExportUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-green-400 hover:text-green-300 underline"
+                    >
+                        🌍 View Last Exported Globe
+                    </a>
+                </div>
+            )}
 
             {participants.length > 0 && (
                 <div className="flex w-full justify-center mt-6">

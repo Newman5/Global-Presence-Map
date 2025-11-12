@@ -14,7 +14,9 @@
     "preview": "next build && next start",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "export-globe": "tsx scripts/export-globe.ts"
+    "export-globe": "tsx scripts/export-globe.ts",
+    "export": "next export",
+    "deploy": "npm run build && npm run export"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.12.0",

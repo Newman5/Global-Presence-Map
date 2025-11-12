@@ -5,6 +5,10 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+    output: 'export', // important for static hosting
+    basePath: '/Global-Presence-Map', // your repo name
+    assetPrefix: '/Global-Presence-Map/', // ensures assets load correctly
+};
 
 export default config;
