@@ -1,441 +1,129 @@
 [
   {
-    "name": "Bill",
-    "city": "Berlin",
-    "lat": 52.52,
-    "lng": 13.405
+    "name": "R",
+    "city": "San Francisco",
+    "lat": 37.7749,
+    "lng": -122.4194
   },
   {
-    "name": "Larry",
+    "name": "N",
+    "city": "New York",
+    "lat": 40.7127,
+    "lng": -74.006
+  },
+  {
+    "name": "T",
+    "city": "Tallinn",
+    "lat": 59.4372,
+    "lng": 24.7573
+  },
+  {
+    "name": "J",
+    "city": "Prince Of Wales Island",
+    "lat": 55.631944,
+    "lng": -132.9075
+  },
+  {
+    "name": "N",
+    "city": "Forest Grove",
+    "lat": 45.519,
+    "lng": -123.1111
+  },
+  {
+    "name": "R",
+    "city": "Sanfrancisco",
+    "lat": 37.7749,
+    "lng": -122.4194
+  },
+  {
+    "name": "N",
+    "city": "Newyork",
+    "lat": 40.7127,
+    "lng": -74.006
+  },
+  {
+    "name": "T",
+    "city": "Talin",
+    "lat": 59.4372,
+    "lng": 24.7573
+  },
+  {
+    "name": "J",
+    "city": "\"prince Of Wales Island\"",
+    "lat": 55.631944,
+    "lng": -132.9075
+  },
+  {
+    "name": "N",
+    "city": "Forest Grove",
+    "lat": 45.519,
+    "lng": -123.1111
+  },
+  {
+    "name": "N",
+    "city": "India",
+    "lat": 22.3511,
+    "lng": 78.6677
+  },
+  {
+    "name": "T",
     "city": "London",
     "lat": 51.5072,
     "lng": -0.1276
   },
   {
-    "name": "Terry",
-    "city": "Tokyo",
-    "lat": 35.6895,
-    "lng": 139.6917
-  },
-  {
-    "name": "tim",
-    "city": "Toronto",
-    "lat": 43.65107,
-    "lng": -79.347015
-  },
-  {
-    "name": "Jill",
-    "city": "New York",
-    "lat": 40.7128,
-    "lng": -74.006
-  },
-  {
-    "name": "abstract",
-    "city": "Taipei",
-    "lat": 25.033,
-    "lng": 121.565
-  },
-  {
-    "name": "abstract",
-    "city": "Bangalore",
-    "lat": 12.9716,
-    "lng": 77.5946
-  },
-  {
-    "name": "abstract",
-    "city": "New York",
-    "lat": 40.7128,
-    "lng": -74.006
-  },
-  {
-    "name": "abstract",
-    "city": "London",
-    "lat": 51.5072,
-    "lng": -0.1276
-  },
-  {
-    "name": "abstract",
-    "city": "Tokyo",
-    "lat": 35.6762,
-    "lng": 139.6503
-  },
-  {
-    "name": "abstract",
+    "name": "G",
     "city": "Paris",
     "lat": 48.8566,
     "lng": 2.3522
   },
   {
-    "name": "abstract",
-    "city": "Sydney",
-    "lat": -33.8688,
-    "lng": 151.2093
+    "name": "G",
+    "city": "Houston",
+    "lat": 29.76,
+    "lng": -95.37
   },
   {
-    "name": "abstract",
-    "city": "Nairobi",
-    "lat": -1.286389,
-    "lng": 36.817223
+    "name": "T",
+    "city": "Tallinn",
+    "lat": 59.4372,
+    "lng": 24.7573
   },
   {
-    "name": "abstract",
-    "city": "Lagos",
-    "lat": 6.5244,
-    "lng": 3.3792
+    "name": "R",
+    "city": "San Francisco",
+    "lat": 37.7793,
+    "lng": -122.4193
   },
   {
-    "name": "abstract",
-    "city": "SanFrancisco",
-    "lat": 37.7749,
-    "lng": -122.4194
+    "name": "J",
+    "city": "Prince Of Wales Island",
+    "lat": 55.631944,
+    "lng": -132.9075
   },
   {
-    "name": "abstract",
-    "city": "Toronto",
-    "lat": 43.6532,
-    "lng": -79.3832
-  },
-  {
-    "name": "h",
-    "city": "delhi",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "a",
-    "city": "paris",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "j",
-    "city": "boston",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "n",
-    "city": "vancouver",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "a",
-    "city": "vietnam",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "a",
-    "city": "nigeria",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "l",
-    "city": "portugal",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "n",
-    "city": "india",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "s",
-    "city": "columbia",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "h",
-    "city": "scotland",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "a",
-    "city": "nigeria",
-    "lat": 9.6,
-    "lng": 8
-  },
-  {
-    "name": "l",
-    "city": "portugal",
-    "lat": 39.6622,
-    "lng": -8.1354
-  },
-  {
-    "name": "n",
-    "city": "india",
-    "lat": 22.3511,
-    "lng": 78.6677
-  },
-  {
-    "name": "s",
-    "city": "columbia",
-    "lat": 4.0999,
-    "lng": -72.9088
-  },
-  {
-    "name": "h",
-    "city": "scotland",
-    "lat": 56.7861,
-    "lng": -4.1141
-  },
-  {
-    "name": "h",
-    "city": "delhi",
-    "lat": 28.6328,
-    "lng": 77.2198
-  },
-  {
-    "name": "a",
-    "city": "paris",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "j",
-    "city": "boston",
-    "lat": 42.3554,
-    "lng": -71.0605
-  },
-  {
-    "name": "n",
-    "city": "vancouver",
-    "lat": 49.2609,
-    "lng": -123.114
-  },
-  {
-    "name": "a",
-    "city": "vietnam",
-    "lat": 15.9267,
-    "lng": 107.9651
-  },
-  {
-    "name": "a",
-    "city": "nigeria",
-    "lat": 9.6,
-    "lng": 8
-  },
-  {
-    "name": "l",
-    "city": "portugal",
-    "lat": 39.6622,
-    "lng": -8.1354
-  },
-  {
-    "name": "n",
-    "city": "india",
-    "lat": 22.3511,
-    "lng": 78.6677
-  },
-  {
-    "name": "s",
-    "city": "columbia",
-    "lat": 4.0999,
-    "lng": -72.9088
-  },
-  {
-    "name": "h",
-    "city": "scotland",
-    "lat": 56.7861,
-    "lng": -4.1141
-  },
-  {
-    "name": "h",
-    "city": "delhi",
-    "lat": 28.6328,
-    "lng": 77.2198
-  },
-  {
-    "name": "a",
-    "city": "paris",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "j",
-    "city": "boston",
-    "lat": 42.3554,
-    "lng": -71.0605
-  },
-  {
-    "name": "n",
-    "city": "vancouver",
-    "lat": 49.2609,
-    "lng": -123.114
-  },
-  {
-    "name": "a",
-    "city": "vietnam",
-    "lat": 15.9267,
-    "lng": 107.9651
-  },
-  {
-    "name": "a",
-    "city": "nigeria",
-    "lat": 9.6,
-    "lng": 8
-  },
-  {
-    "name": "l",
-    "city": "portugal",
-    "lat": 39.6622,
-    "lng": -8.1354
-  },
-  {
-    "name": "n",
-    "city": "india",
-    "lat": 22.3511,
-    "lng": 78.6677
-  },
-  {
-    "name": "s",
-    "city": "columbia",
-    "lat": 4.0999,
-    "lng": -72.9088
-  },
-  {
-    "name": "h",
-    "city": "scotland",
-    "lat": 56.7861,
-    "lng": -4.1141
-  },
-  {
-    "name": "h",
-    "city": "delhi",
-    "lat": 28.6328,
-    "lng": 77.2198
-  },
-  {
-    "name": "a",
-    "city": "paris",
-    "lat": null,
-    "lng": null
-  },
-  {
-    "name": "j",
-    "city": "boston",
-    "lat": 42.3554,
-    "lng": -71.0605
-  },
-  {
-    "name": "n",
-    "city": "vancouver",
-    "lat": 49.2609,
-    "lng": -123.114
-  },
-  {
-    "name": "a",
-    "city": "vietnam",
-    "lat": 15.9267,
-    "lng": 107.9651
-  },
-  {
-    "name": "a",
-    "city": "nigeria",
-    "lat": 9.6,
-    "lng": 8
-  },
-  {
-    "name": "l",
-    "city": "portugal",
-    "lat": 39.6622,
-    "lng": -8.1354
-  },
-  {
-    "name": "n",
-    "city": "india",
-    "lat": 22.3511,
-    "lng": 78.6677
-  },
-  {
-    "name": "s",
-    "city": "columbia",
-    "lat": 4.0999,
-    "lng": -72.9088
-  },
-  {
-    "name": "h",
-    "city": "scotland",
-    "lat": 56.7861,
-    "lng": -4.1141
-  },
-  {
-    "name": "n",
-    "city": "new york",
+    "name": "N",
+    "city": "New York",
     "lat": 40.7127,
     "lng": -74.006
   },
   {
-    "name": "h",
-    "city": "delhi",
-    "lat": 28.6328,
-    "lng": 77.2198
+    "name": "L",
+    "city": "Taipei",
+    "lat": 25.033,
+    "lng": 121.565
   },
   {
-    "name": "a",
-    "city": "paris",
-    "lat": null,
-    "lng": null
+    "name": "M",
+    "city": "Paris",
+    "lat": 48.8566,
+    "lng": 2.3522
   },
   {
-    "name": "j",
-    "city": "boston",
-    "lat": 42.3554,
-    "lng": -71.0605
-  },
-  {
-    "name": "n",
-    "city": "vancouver",
-    "lat": 49.2609,
-    "lng": -123.114
-  },
-  {
-    "name": "a",
-    "city": "vietnam",
-    "lat": 15.9267,
-    "lng": 107.9651
-  },
-  {
-    "name": "a",
-    "city": "nigeria",
-    "lat": 9.6,
-    "lng": 8
-  },
-  {
-    "name": "l",
-    "city": "portugal",
-    "lat": 39.6622,
-    "lng": -8.1354
-  },
-  {
-    "name": "n",
-    "city": "india",
-    "lat": 22.3511,
-    "lng": 78.6677
-  },
-  {
-    "name": "s",
-    "city": "columbia",
-    "lat": 4.0999,
-    "lng": -72.9088
-  },
-  {
-    "name": "h",
-    "city": "scotland",
-    "lat": 56.7861,
-    "lng": -4.1141
-  },
-  {
-    "name": "n",
-    "city": "newyork",
-    "lat": 40.7127,
-    "lng": -74.006
+    "name": "N",
+    "city": "London",
+    "lat": 51.5072,
+    "lng": -0.1276
   },
   {
     "name": "i",

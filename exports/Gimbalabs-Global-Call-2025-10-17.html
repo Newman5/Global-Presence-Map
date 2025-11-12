@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Gimbalabs Global Call</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html,body { margin:0; height:100%; background:black; }
+    #globe { width:100vw; height:100vh; overflow:hidden; }
+  </style>
+  <script src="https://unpkg.com/three"></script>
+  <script src="https://unpkg.com/globe.gl"></script>
+</head>
+<body>
+  <div id="globe"></div>
+  <script>
+    const meeting = {"title":"Gimbalabs Global Call","date":"2025-10-17","participants":[{"name":"Lewis","city":"Nairobi","country":"Kenya","lat":-1.286389,"lng":36.817223},{"name":"Harsha","city":"Bangalore","country":"India","lat":12.9716,"lng":77.5946},{"name":"Newman","city":"New York","country":"USA","lat":40.7128,"lng":-74.006},{"name":"Nori","city":"Victoria","country":"BC Canada","lat":48.43,"lng":-123.37}]};
+
+    const points = meeting.participants.map(p => ({
+      lat: p.lat,
+      lng: p.lng,
+      label: p.name + ' (' + p.city + ')',
+      color: 'orange'
+    }));
+
+    const arcs = [];
+    for (let i = 0; i < points.length; i++) {
+      for (let j = i + 1; j < points.length; j++) {
+        arcs.push({
+          startLat: points[i].lat,
+          startLng: points[i].lng,
+          endLat: points[j].lat,
+          endLng: points[j].lng,
+          color: ['#ffaa00', '#ff6600']
+        });
+      }
+    }
+
+    const globe = Globe()
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+      .pointsData(points)
+      .pointColor('color')
+      .pointLabel('label')
+      .pointAltitude(0.3)
+      .arcsData(arcs)
+      .arcColor('color')
+      .arcAltitude(0.2)
+      .arcDashLength(0.5)
+      .arcDashGap(0.02)
+      .arcDashAnimateTime(3000);
+
+    globe(document.getElementById('globe'));
+  </script>
+</body>
+</html>
