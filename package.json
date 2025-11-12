@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "check": "next lint && tsc --noEmit",
-    "dev": "next dev --turbo",
+    "dev": "node scripts/prepare-export.cjs && next dev --turbo",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "lint": "next lint",
@@ -15,7 +15,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "export-globe": "tsx scripts/export-globe.ts",
-    "export": "NEXT_PUBLIC_EXPORT_MODE=true next build && next export",
+    "export": "NEXT_PUBLIC_EXPORT_MODE=true node scripts/prepare-export.cjs && next build && node scripts/cleanup-export.cjs",
     "deploy": "npm run build && npm run export"
   },
   "dependencies": {
