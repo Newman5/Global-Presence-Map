@@ -10,6 +10,9 @@ import fetch from 'node-fetch'
 const membersPath = path.join(process.cwd(), 'src', 'data', 'members.json')
 const coordsPath = path.join(process.cwd(), 'src', 'data', 'cityCoords.ts')
 
+/**
+ * @param {string} city
+ */
 async function getCoords(city) {
     const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
         city
