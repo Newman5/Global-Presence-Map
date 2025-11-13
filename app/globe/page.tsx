@@ -71,7 +71,7 @@ export default function GlobePage() {
                     lat: c.lat,
                     lng: c.lng,
                     label: `${p.name} (${p.city})`,
-                    color: 'orange'
+                    color: 'green'
                 };
             })
             .filter((p): p is { lat: number; lng: number; label: string; color: string } => Boolean(p));
