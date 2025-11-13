@@ -4,6 +4,8 @@
 // normalizes names, prefers member-provided lat/lng, otherwise fetches from
 // OpenStreetMap Nominatim, and auto-inserts them into cityCoords.ts.
 
+
+
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
