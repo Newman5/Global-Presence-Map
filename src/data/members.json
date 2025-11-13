@@ -202,5 +202,59 @@
     "city": "Nowhere",
     "lat": 35.1592,
     "lng": -98.4423
+  },
+  {
+    "name": "T",
+    "city": "Estonia",
+    "lat": 58.7524,
+    "lng": 25.3319
+  },
+  {
+    "name": "T",
+    "city": "Lagos",
+    "lat": 6.5244,
+    "lng": 3.3792
+  },
+  {
+    "name": "F",
+    "city": "Miami",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "D",
+    "city": "New York",
+    "lat": 40.7127,
+    "lng": -74.006
+  },
+  {
+    "name": "C",
+    "city": "San Francisco",
+    "lat": 37.7793,
+    "lng": -122.4193
+  },
+  {
+    "name": "C",
+    "city": "Cleveland",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "B",
+    "city": "Miami",
+    "lat": 25.7742,
+    "lng": -80.1936
+  },
+  {
+    "name": "A",
+    "city": "Hyderabad",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "R",
+    "city": "Hyderabad",
+    "lat": 17.3606,
+    "lng": 78.4741
   }
 ]

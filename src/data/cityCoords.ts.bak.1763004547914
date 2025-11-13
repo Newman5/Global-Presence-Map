@@ -28,8 +28,5 @@ export const cityCoords: Record<string, { lat: number; lng: number }> = {
   "forest grove": { lat: 45.519, lng: -123.1111 },
   oregon: { lat: 43.9793, lng: -120.7373 },
   houston: { lat: 29.7589, lng: -95.3677 },
-  cleveland: { lat: 41.4997, lng: -81.6937 },
-  miami: { lat: 25.7742, lng: -80.1936 },
-  houstville: { lat: 29.7589, lng: -95.3677 },
-  'hyderabad': { lat: 17.3606, lng: 78.4741 },
+  miami: { lat: 25, lng: -71 },
 };

@@ -132,6 +132,20 @@ function detectIndent(tsText, start, end) {
     return '  '
 }
 
+/** Simple CLI flags */
+const FORCE_API = process.argv.includes('--force-api')
+const VERIFY_MEMBER = process.argv.includes('--verify-member') || true // default verify
+
+/** Haversine distance in km */
+function distanceKm(a, b) {
+    const R = 6371
+    const dLat = (b.lat - a.lat) * Math.PI / 180
+    const dLng = (b.lng - a.lng) * Math.PI / 180
+    const s1 = Math.sin(dLat / 2), s2 = Math.sin(dLng / 2)
+    const aa = s1 * s1 + Math.cos(a.lat * Math.PI / 180) * Math.cos(b.lat * Math.PI / 180) * s2 * s2
+    return 2 * R * Math.atan2(Math.sqrt(aa), Math.sqrt(1 - aa))
+}
+
 async function main() {
     if (!fs.existsSync(membersPath)) {
         console.error(`❌ members.json not found at ${membersPath}`)
@@ -155,15 +169,16 @@ async function main() {
     const indent = detectIndent(tsText, start, end)
 
     // Build map of normalizedCity -> first valid {lat,lng} from members.json
-    /** @type {Map<string, {lat:number, lng:number}>} */
+    /** @type {Map<string, {lat:number, lng:number, idx:number}>} */
     const memberCoords = new Map()
-    for (const m of members) {
+    for (let idx = 0; idx < members.length; idx++) {
+        const m = members[idx]
         const n = normalizeCity(m.city)
         if (!n) continue
         const lat = Number(m.lat)
         const lng = Number(m.lng)
         if (Number.isFinite(lat) && Number.isFinite(lng) && !memberCoords.has(n)) {
-            memberCoords.set(n, { lat: Number(lat.toFixed(4)), lng: Number(lng.toFixed(4)) })
+            memberCoords.set(n, { lat: Number(lat.toFixed(4)), lng: Number(lng.toFixed(4)), idx })
         }
     }
 
@@ -186,19 +201,35 @@ async function main() {
     const resolved = []
     for (const city of missing) {
         const fromMember = memberCoords.get(city)
-        if (fromMember) {
-            resolved.push({ city, ...fromMember })
-            console.log(`✅ ${city}: from members.json lat=${fromMember.lat}, lng=${fromMember.lng}`)
+
+        if (fromMember && !FORCE_API) {
+            let chosen = { lat: fromMember.lat, lng: fromMember.lng }
+            let note = `from members.json#${fromMember.idx}`
+
+            if (VERIFY_MEMBER) {
+                const api = await getCoords(city)
+                if (api) {
+                    const d = distanceKm(fromMember, api)
+                    if (d > 200) { // override obviously-wrong member coords
+                        chosen = api
+                        note = `overrode member coords (Δ≈${d.toFixed(0)}km) with API`
+                    }
+                    await new Promise(r => setTimeout(r, 1200))
+                }
+            }
+
+            resolved.push({ city, ...chosen })
+            console.log(`✅ ${city}: ${note} lat=${chosen.lat}, lng=${chosen.lng}`)
             continue
         }
-        const coords = await getCoords(city)
-        if (coords) {
-          resolved.push({ city, ...coords })
-          console.log(`✅ ${city}: fetched lat=${coords.lat}, lng=${coords.lng}`)
+
+        const api = await getCoords(city)
+        if (api) {
+            resolved.push({ city, ...api })
+            console.log(`✅ ${city}: fetched lat=${api.lat}, lng=${api.lng}`)
       } else {
           console.warn(`⚠️  No coordinates found for '${city}'`)
-      }
-        // Be polite to Nominatim
+        }
         await new Promise(r => setTimeout(r, 1200))
     }
 
