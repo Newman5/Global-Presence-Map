@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Open Spaces</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+    /* layout */
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: black;
+      display: flex;
+      flex-direction: column;
+    }
+    /* container centers globe and allows footer/other content later */
+    .container {
+      position: relative;
+      display: flex;
+      flex: 1 1 auto;
+      align-items: stretch;
+      justify-content: center;
+      min-height: 0; /* allow children to size correctly inside flex */
+    }
+    /* globe takes full width and adapts height on mobile.
+       max-height uses device viewport height (100dvh) to avoid address-bar issues on mobile */
+    #globe {
+      width: 100%;
+      height: 100%;
+      max-height: 100dvh;
+      min-height: 40vh;
+      overflow: hidden;
+      flex: 1 1 auto;
+      position: relative;
+    }
+    /* overlay positioned inside container; responsive font-size */
+    .overlay {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      color: white;
+      font-family: sans-serif;
+      font-weight: bold;
+      background: rgba(0,0,0,0.35);
+      padding: 6px 8px;
+      border-radius: 6px;
+      z-index: 2;
+      font-size: clamp(12px, 2.5vw, 16px);
+      pointer-events: none;
+    }
+    /* smaller tweaks for very small screens */
+    @media (max-width: 420px) {
+      .overlay { left: 8px; top: 8px; padding: 4px 6px; }
+      #globe { min-height: 50vh; }
+    }
+  </style>
+  <script src="https://unpkg.com/globe.gl"></script>
+</head>
+<body>
+<section class="container">
+  <div id="globe"></div>
+  <div class="overlay">Open Spaces — 2025-11-13</div>
+  </section>
+  <script>
+    const points = [{"lat":42.2814,"lng":-83.7485,"label":"H (ann arbor)","color":"green"},{"lat":15.9267,"lng":107.9651,"label":"A (vietnam)","color":"green"},{"lat":38.7078,"lng":-9.1366,"label":"L (lisbon)","color":"green"},{"lat":59.4372,"lng":24.7573,"label":"T (tallinn)","color":"green"},{"lat":4.6126,"lng":13.1536,"label":"M (cameroon)","color":"green"},{"lat":6.5244,"lng":3.3792,"label":"G (lagos)","color":"green"},{"lat":6.5244,"lng":3.3792,"label":"E (lagos)","color":"green"},{"lat":40.7127,"lng":-74.006,"label":"N (new york)","color":"green"}];
+    const arcs = [];
+    for (let i=0;i<points.length;i++) {
+      for (let j=i+1;j<points.length;j++) {
+        arcs.push({ startLat: points[i].lat, startLng: points[i].lng, endLat: points[j].lat, endLng: points[j].lng, color: ['#ffaa00','#ff6600'] });
+      }
+    }
+    const globe = Globe()
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
+      .pointsData(points).pointColor('color').pointLabel('label')
+      .arcsData(arcs).arcColor('color').arcAltitude(0.2).arcDashLength(0.5).arcDashGap(0.02).arcDashAnimateTime(3000);
+    globe(document.getElementById('globe'));
+  </script>
+</body>
+</html>

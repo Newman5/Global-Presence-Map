@@ -262,5 +262,35 @@
     "city": "Forest Grove",
     "lat": 45.519,
     "lng": -123.1111
+  },
+  {
+    "name": "H",
+    "city": "Ann Arbor",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "L",
+    "city": "Lisbon",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "M",
+    "city": "Cameroon",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "G",
+    "city": "Lagos",
+    "lat": 6.5244,
+    "lng": 3.3792
+  },
+  {
+    "name": "E",
+    "city": "Lagos",
+    "lat": 6.5244,
+    "lng": 3.3792
   }
 ]

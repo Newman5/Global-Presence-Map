@@ -32,7 +32,4 @@ export const cityCoords: Record<string, { lat: number; lng: number }> = {
   miami: { lat: 25.7742, lng: -80.1936 },
   houstville: { lat: 29.7589, lng: -95.3677 },
   'hyderabad': { lat: 17.3606, lng: 78.4741 },
-  'ann arbor': { lat: 42.2814, lng: -83.7485 },
-  'cameroon': { lat: 4.6126, lng: 13.1536 },
-  'lisbon': { lat: 38.7078, lng: -9.1366 },
 };
