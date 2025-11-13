@@ -183,7 +183,7 @@ export default function GlobePage() {
         //build a file in the public/exports folder via post to api/save-meeting
 
         const filename = `${safeName}-${dateStr}.html`;
-        const exportPath = `/exports/${filename}`; // where the file will be if saved on server
+        const exportPath = `https://newman5.github.io/Global-Presence-Map/exports/${filename}`; // where the file will be if saved on server
         try {
             const res = await fetch('/api/save-meeting', {
                 method: 'POST',
