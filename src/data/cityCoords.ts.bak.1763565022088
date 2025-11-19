@@ -35,7 +35,4 @@ export const cityCoords: Record<string, { lat: number; lng: number }> = {
   'ann arbor': { lat: 42.2814, lng: -83.7485 },
   'cameroon': { lat: 4.6126, lng: 13.1536 },
   'lisbon': { lat: 38.7078, lng: -9.1366 },
-  'east lansing': { lat: 42.732, lng: -84.4722 },
-  'kenya': { lat: 1.442, lng: 38.4314 },
-  'south africa': { lat: -28.8166, lng: 24.9916 },
 };

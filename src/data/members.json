@@ -292,5 +292,65 @@
     "city": "Lagos",
     "lat": 6.5244,
     "lng": 3.3792
+  },
+  {
+    "name": "J",
+    "city": "South Africa",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "G",
+    "city": "East Lansing",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "L",
+    "city": "Nairobi",
+    "lat": -1.286389,
+    "lng": 36.817223
+  },
+  {
+    "name": "J",
+    "city": "Kenya",
+    "lat": 25,
+    "lng": -71
+  },
+  {
+    "name": "- J",
+    "city": "South Africa",
+    "lat": -28.8166,
+    "lng": 24.9916
+  },
+  {
+    "name": "- G",
+    "city": "East Lansing",
+    "lat": 42.732,
+    "lng": -84.4722
+  },
+  {
+    "name": "- N",
+    "city": "New York",
+    "lat": 40.7127,
+    "lng": -74.006
+  },
+  {
+    "name": "- L",
+    "city": "Nairobi",
+    "lat": -1.286389,
+    "lng": 36.817223
+  },
+  {
+    "name": "- J",
+    "city": "Kenya",
+    "lat": 1.442,
+    "lng": 38.4314
+  },
+  {
+    "name": "- A",
+    "city": "Lagos",
+    "lat": 6.5244,
+    "lng": 3.3792
   }
 ]
