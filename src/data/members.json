@@ -352,5 +352,17 @@
     "city": "Lagos",
     "lat": 6.5244,
     "lng": 3.3792
+  },
+  {
+    "name": "No",
+    "city": "Forest Grove",
+    "lat": 45.519,
+    "lng": -123.1111
+  },
+  {
+    "name": "Ne",
+    "city": "New York",
+    "lat": 40.7127,
+    "lng": -74.006
   }
 ]

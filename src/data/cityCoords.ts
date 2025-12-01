@@ -39,3 +39,4 @@ export const cityCoords: Record<string, { lat: number; lng: number }> = {
   'kenya': { lat: 1.442, lng: 38.4314 },
   'south africa': { lat: -28.8166, lng: 24.9916 },
 };
+
