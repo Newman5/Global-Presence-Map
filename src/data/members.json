@@ -364,5 +364,31 @@
     "city": "New York",
     "lat": 40.7127,
     "lng": -74.006
+  },
+  {
+    "id": "8b3c9415-4da7-4df7-81c6-97dee37f53e7",
+    "name": "Testuser",
+    "city": "Tokyo",
+    "lat": 35.6762,
+    "lng": 139.6503,
+    "source": "lookup",
+    "createdAt": "2026-01-10T16:05:27.418Z"
+  },
+  {
+    "id": "762e3019-3554-4e59-b7ac-3a535f9fae7a",
+    "name": "Phase1test",
+    "city": "Berlin",
+    "lat": 52.5174,
+    "lng": 13.3951,
+    "source": "lookup",
+    "createdAt": "2026-01-10T16:05:39.027Z"
+  },
+  {
+    "id": "9233f571-1f9b-4f70-8a2b-c884f13a8e8c",
+    "name": "Unknowncity",
+    "city": "Atlantis",
+    "lat": null,
+    "lng": null,
+    "createdAt": "2026-01-10T16:05:45.557Z"
   }
 ]
