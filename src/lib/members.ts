@@ -68,6 +68,8 @@ export function findMemberById(id: string): Member | null {
  * Create or find a member
  * If the member already exists, return the existing member
  * Otherwise, create a new member
+ * 
+ * Phase 3: Members no longer store coordinates
  */
 export function findOrCreateMember(name: string, city: string): Member {
   const normalizedName = normalizeInput(name);
@@ -83,16 +85,11 @@ export function findOrCreateMember(name: string, city: string): Member {
     return existing;
   }
 
-  // Create new member
-  const lookupResult = getCityLookupResult(normalizedCity);
-  
+  // Create new member (no coordinates stored)
   const newMember: Member = {
     id: generateId(),
     name: normalizedName,
     city: normalizedCity,
-    lat: lookupResult.found ? lookupResult.coords.lat : null,
-    lng: lookupResult.found ? lookupResult.coords.lng : null,
-    source: lookupResult.found ? 'lookup' : undefined,
     createdAt: new Date().toISOString(),
   };
 

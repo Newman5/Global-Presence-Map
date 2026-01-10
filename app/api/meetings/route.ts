@@ -28,17 +28,12 @@ export async function POST(request: Request) {
       try {
         const member = findOrCreateMember(participant.name, participant.city);
         
-        // Ensure member has an ID (should always be the case, but TypeScript doesn't know)
+        // Ensure member has an ID (should always be the case)
         if (!member.id) {
           throw new Error(`Member ${participant.name} has no ID`);
         }
         
         memberIds.push(member.id);
-        
-        // Warn if city has no coordinates
-        if (member.lat === null || member.lng === null) {
-          warnings.push(`City '${participant.city}' has no coordinates`);
-        }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         warnings.push(`Failed to add participant ${participant.name}: ${errorMessage}`);

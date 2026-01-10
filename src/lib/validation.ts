@@ -2,17 +2,15 @@
 import { z } from 'zod';
 
 /**
- * Schema for Member entity
+ * Schema for Member entity (Phase 3 - No coordinates stored)
  * This represents a community member's identity and location preference
+ * Coordinates are computed at runtime from cities.json
  */
 export const MemberSchema = z.object({
-  id: z.string().min(1).optional(), // Optional for backward compatibility with existing data
+  id: z.string().min(1),
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
   city: z.string().min(1, 'City is required').max(100, 'City too long'),
-  lat: z.number().nullable(),
-  lng: z.number().nullable(),
-  source: z.enum(['lookup', 'fallback', 'manual']).optional(),
-  createdAt: z.string().datetime().optional(),
+  createdAt: z.string().datetime(),
 });
 
 export type Member = z.infer<typeof MemberSchema>;
