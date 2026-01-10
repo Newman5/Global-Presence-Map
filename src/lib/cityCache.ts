@@ -6,11 +6,10 @@
  * It provides a clean interface for coordinate lookups without
  * mixing concerns with member data storage.
  * 
- * Phase 1 Improvement: Prevents fallback coordinates from being
- * written to members.json by centralizing coordinate resolution.
+ * Phase 2 Improvement: Uses cities.json as single source of truth
  */
 
-import { cityCoords } from '~/data/cityCoords';
+import { getCityByName, getCityCoordinates, getAllCities, cityExists } from './cities';
 import type { CityCoord } from './validation';
 
 /**
@@ -37,18 +36,7 @@ export function normalizeCityForLookup(city: string): string {
  */
 export function lookupCityCoords(city: string): CityCoord | null {
   if (!city) return null;
-
-  // Try normalized lookup (no spaces)
-  const normalizedKey = normalizeCityForLookup(city);
-  let coords = cityCoords[normalizedKey];
-
-  // Also try exact match with spaces preserved
-  coords ??= cityCoords[city.toLowerCase()];
-
-  // Also try exact original case
-  coords ??= cityCoords[city];
-
-  return coords ? { lat: coords.lat, lng: coords.lng } : null;
+  return getCityCoordinates(city);
 }
 
 /**
@@ -81,7 +69,7 @@ export function getCityLookupResult(city: string): CityLookupResult {
  * @returns Array of city names that have coordinates
  */
 export function getKnownCities(): string[] {
-  return Object.keys(cityCoords);
+  return getAllCities().map(city => city.normalizedName);
 }
 
 /**
@@ -90,5 +78,5 @@ export function getKnownCities(): string[] {
  * @returns true if coordinates exist, false otherwise
  */
 export function hasCityCoords(city: string): boolean {
-  return lookupCityCoords(city) !== null;
+  return cityExists(city);
 }

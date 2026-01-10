@@ -1,0 +1,9 @@
+{
+  "id": "my-test-meeting-2026-01-10",
+  "title": "My Test Meeting!",
+  "date": "2026-01-10",
+  "participantIds": [
+    "member-1"
+  ],
+  "createdAt": "2026-01-10T21:35:15.414Z"
+}
