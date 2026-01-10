@@ -33,20 +33,32 @@ export default function GlobePage() {
             .map(p => p.city);
 
         setUnknownCities(missing);
-        setParticipants(parsed);
 
-        // 📨 send each entry to /api/add-member
-        for (const p of parsed) {
-            console.log('Posting', p);
-            try {
-                await fetch('/api/add-member', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(p),
-                });
-            } catch (err) {
-                console.error('Error posting', p, err);
+        // Phase 2: Single API call to create meeting with all participants
+        try {
+            const response = await fetch('/api/meetings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: meetingName || 'Untitled Meeting',
+                    participants: parsed,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to create meeting: ${response.status}`);
             }
+
+            const data = await response.json() as { meeting: { id: string }; warnings?: string[] };
+            
+            if (data.warnings && data.warnings.length > 0) {
+                console.warn('Meeting creation warnings:', data.warnings);
+            }
+
+            setParticipants(parsed);
+        } catch (err) {
+            console.error('Error creating meeting:', err);
+            alert('Failed to create meeting. Please try again.');
         }
 
         setLoading(false);

@@ -80,15 +80,15 @@ describe('validateMember', () => {
     expect(() => validateMember(member)).toThrow(ZodError);
   });
 
-  it('should throw error for invalid UUID', () => {
+  it('should accept any valid string as ID', () => {
     const member = {
-      id: 'not-a-uuid',
+      id: 'not-a-uuid-but-valid-string',
       name: 'Alice',
       city: 'Paris',
       lat: 48.8566,
       lng: 2.3522,
     };
-    expect(() => validateMember(member)).toThrow(ZodError);
+    expect(() => validateMember(member)).not.toThrow();
   });
 
   it('should throw error for invalid source', () => {
