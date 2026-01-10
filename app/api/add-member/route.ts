@@ -1,22 +1,12 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import { cityCoords } from "~/data/cityCoords";
 import { normalizeInput } from "~/lib/normalize";
+import { getCityLookupResult } from "~/lib/cityCache";
+import { generateId } from "~/lib/uuid";
+import { validateAddMemberInput, safeValidateMembers, type Member } from "~/lib/validation";
 
 const filePath = path.join(process.cwd(), "src", "data", "members.json");
-
-// define a type for your data
-type Member = {
-  name: string;
-  city: string;
-  lat: number | null;
-  lng: number | null;
-  source?: string;
-};
-
-// ✅ Default fallback coordinates: (25.0, -71.0) is in the Atlantic Ocean, often humorously referred to as the "Bermuda Triangle" and used as a placeholder when a city's coordinates are unknown.
-const FALLBACK_COORDS = { lat: 25.0, lng: -71.0 };
 
 export async function GET() {
   try {
@@ -25,7 +15,15 @@ export async function GET() {
     }
     const fileContent = fs.readFileSync(filePath, "utf8");
     const members: Member[] = JSON.parse(fileContent) as Member[];
-    return NextResponse.json({ members });
+    
+    // Validate members data
+    const validatedMembers = safeValidateMembers(members);
+    if (!validatedMembers) {
+      console.warn("⚠️ Members data validation failed, returning raw data");
+      return NextResponse.json({ members });
+    }
+    
+    return NextResponse.json({ members: validatedMembers });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
@@ -37,46 +35,31 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    // ✅ Safely parse and validate
+    // ✅ Parse and validate input
     const body = (await req.json()) as { name?: string; city?: string };
-    const name = normalizeInput(body.name);
-    const city = normalizeInput(body.city);
+    
+    // Validate input structure
+    const validationResult = validateAddMemberInput(body);
+    const name = normalizeInput(validationResult.name);
+    const city = normalizeInput(validationResult.city);
 
     if (!name || !city) {
       return NextResponse.json(
-        { message: "Missing name or city" },
+        { message: "Missing name or city after normalization" },
         { status: 400 },
       );
     }
 
-    // ✅ Safely load members
+    // ✅ Load existing members
     let members: Member[] = [];
     if (fs.existsSync(filePath)) {
       const fileContent = fs.readFileSync(filePath, "utf8");
-      members = JSON.parse(fileContent) as Member[];
+      const parsedMembers = JSON.parse(fileContent) as Member[];
+      const validated = safeValidateMembers(parsedMembers);
+      members = validated ?? parsedMembers; // Use raw data if validation fails
     }
 
-    // ✅ Lookup coordinates safely using ??
-
-    // Case-insensitive lookup
-    const normalizedCity = city.toLowerCase();
-    const location = Object.entries(cityCoords).find(
-      ([key]) => key.toLowerCase() === normalizedCity,
-    )?.[1];
-    let source = "lookup";
-    let lat = location?.lat ?? null;
-    let lng = location?.lng ?? null;
-
-    // ✅ Warn if city not found
-    if (!location) {
-      console.warn(
-        `⚠️ City '${city}' not found in cityCoords. Using fallback.`,
-      );
-      lat = FALLBACK_COORDS.lat;
-      lng = FALLBACK_COORDS.lng;
-      source = "fallback";
-    }
-    // ✅ Deduplicate by name + city (case-insensitive)
+    // ✅ Check for duplicates (case-insensitive)
     const exists = members.some(
       (m) =>
         m.name.toLowerCase() === name.toLowerCase() &&
@@ -90,26 +73,58 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ Add new member
+    // ✅ Lookup coordinates using city cache
+    // PHASE 1 IMPROVEMENT: Do NOT persist fallback coordinates
+    const lookupResult = getCityLookupResult(city);
+    
+    let lat: number | null = null;
+    let lng: number | null = null;
+    let source: 'lookup' | 'fallback' | undefined = undefined;
+    let warning: string | undefined = undefined;
+
+    if (lookupResult.found) {
+      lat = lookupResult.coords.lat;
+      lng = lookupResult.coords.lng;
+      source = 'lookup';
+    } else {
+      // PHASE 1 CHANGE: Store null coordinates instead of fallback
+      // This prevents permanent pollution of members.json with placeholder data
+      console.warn(`⚠️ City '${city}' not found in cityCoords. Storing null coordinates.`);
+      warning = `City '${city}' coordinates not found. Member added with null coordinates.`;
+    }
+
+    // ✅ Create new member with ID (PHASE 1: Introduce member IDs)
     const newMember: Member = {
+      id: generateId(),
       name,
       city,
       lat,
       lng,
+      source,
+      createdAt: new Date().toISOString(),
     };
+    
     members.push(newMember);
 
+    // ✅ Write to file
     fs.writeFileSync(filePath, JSON.stringify(members, null, 2));
 
     return NextResponse.json({
-      message:
-        source === "fallback"
-          ? `Added ${name} from ${city} (fallback location)`
-          : `Added ${name} from ${city}`,
+      message: warning ?? `Added ${name} from ${city}`,
       member: newMember,
+      warning,
     });
   } catch (error) {
     console.error(error);
+    
+    // Provide more helpful error messages for validation failures
+    if (error instanceof Error && error.name === 'ZodError') {
+      return NextResponse.json(
+        { message: "Invalid input data", error: error.message },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }
