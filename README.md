@@ -171,7 +171,7 @@ This script will:
 
 **Options:**
 - `--force-api`: Always use API instead of member-provided coordinates
-- `--verify-member`: Verify member coordinates against API (default: true)
+- `--verify-member`: Verify member coordinates against API (compares to detect errors)
 
 ### Manual Method
 

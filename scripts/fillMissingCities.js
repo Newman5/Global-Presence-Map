@@ -29,6 +29,9 @@ const projectRoot = path.resolve(__dirname, '..')
 const membersPath = path.join(projectRoot, 'src', 'data', 'members.json')
 const citiesPath = path.join(projectRoot, 'src', 'data', 'cities.json')
 
+// Configuration
+const RATE_LIMIT_DELAY = 1200 // milliseconds between API requests (respects OSM usage policy)
+
 // Known corrections for common variants/typos
 const CORRECTIONS = new Map([
     ['sanfrancisco', 'san francisco'],
@@ -38,10 +41,9 @@ const CORRECTIONS = new Map([
     ["'prince of wales island'", 'prince of wales island'],
 ])
 
-// CLI flags
+// CLI flags and defaults
 const FORCE_API = process.argv.includes('--force-api')
-const VERIFY_MEMBER = process.argv.includes('--verify-member')
-const RATE_LIMIT_DELAY = 1200 // milliseconds between API requests (respects OSM usage policy)
+const VERIFY_MEMBER = process.argv.includes('--verify-member') // If not provided, defaults to false
 
 /**
  * Normalizes a city name for consistent storage and lookup
