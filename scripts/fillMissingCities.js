@@ -40,7 +40,8 @@ const CORRECTIONS = new Map([
 
 // CLI flags
 const FORCE_API = process.argv.includes('--force-api')
-const VERIFY_MEMBER = process.argv.includes('--verify-member') || true
+const VERIFY_MEMBER = process.argv.includes('--verify-member')
+const RATE_LIMIT_DELAY = 1200 // milliseconds between API requests (respects OSM usage policy)
 
 /**
  * Normalizes a city name for consistent storage and lookup
@@ -190,7 +191,7 @@ async function main() {
                         // Use API's country code even if coordinates match
                         chosen.countryCode = api.countryCode
                     }
-                    await new Promise(r => setTimeout(r, 1200))
+                    await new Promise(r => setTimeout(r, RATE_LIMIT_DELAY))
                 }
             }
 
@@ -207,7 +208,7 @@ async function main() {
         } else {
             console.warn(`⚠️  No coordinates found for '${city}'`)
         }
-        await new Promise(r => setTimeout(r, 1200))
+        await new Promise(r => setTimeout(r, RATE_LIMIT_DELAY))
     }
 
     if (!resolved.length) {
