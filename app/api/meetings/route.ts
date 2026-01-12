@@ -7,20 +7,41 @@ import { createMeeting } from "~/lib/meetings";
  * POST /api/meetings
  * Creates a new meeting with participants
  * 
- * Phase 2 Implementation:
- * - Single API call for entire meeting (no loop)
+ * This is the main API endpoint for creating meetings. It handles the complete workflow:
+ * 1. Validates input (title, participants array)
+ * 2. Finds or creates members (automatic deduplication)
+ * 3. Creates meeting with participant IDs
+ * 4. Persists everything to disk
+ * 
+ * Request Body:
+ * {
+ *   title: string,
+ *   participants: Array<{ name: string, city: string }>
+ * }
+ * 
+ * Response:
+ * {
+ *   success: true,
+ *   meeting: Meeting,
+ *   warnings?: string[]  // If any participants failed to add
+ * }
+ * 
+ * Phase 2 Design:
+ * - Single API call (no loops from frontend)
  * - Members are reused across meetings
- * - Clear separation of storage and computation
+ * - Clear separation of storage (members, meetings) and computation (coordinates)
  */
 export async function POST(request: Request) {
   try {
+    // ===== Input Validation =====
+    // Parse and validate the request body against schema
     const body = await request.json();
-    
-    // Validate input
     const validatedInput = validateCreateMeetingInput(body);
     const { title, participants } = validatedInput;
 
-    // Find or create members
+    // ===== Member Creation/Lookup =====
+    // For each participant, find existing member or create new one
+    // Collects member IDs for the meeting record
     const memberIds: string[] = [];
     const warnings: string[] = [];
 
@@ -40,15 +61,20 @@ export async function POST(request: Request) {
       }
     }
 
-    // Create meeting with participant IDs
+    // ===== Meeting Creation =====
+    // Create meeting record with participant IDs (not full objects)
     const meeting = createMeeting(title, memberIds);
 
+    // ===== Response =====
+    // Return meeting data, include warnings if any participants failed
     return NextResponse.json({
       success: true,
       meeting,
       warnings: warnings.length > 0 ? warnings : undefined,
     });
   } catch (error) {
+    // ===== Error Handling =====
+    // Log error and return appropriate HTTP status
     console.error('Error creating meeting:', error);
     
     if (error instanceof Error && error.name === 'ZodError') {

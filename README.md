@@ -152,6 +152,29 @@ Session with participant references:
 
 ## Adding Cities
 
+### Automated Method (Recommended)
+
+The easiest way to add missing cities is to use the automated script:
+
+```bash
+# Automatically finds cities in members.json that aren't in cities.json
+# and fetches their coordinates from OpenStreetMap
+npm run fill-cities
+```
+
+This script will:
+- Scan `members.json` for cities not in `cities.json`
+- Fetch coordinates from OpenStreetMap Nominatim API
+- Automatically detect country codes
+- Add them to `cities.json` with proper formatting
+- Create a backup before modifying files
+
+**Options:**
+- `--force-api`: Always use API instead of member-provided coordinates
+- `--verify-member`: Verify member coordinates against API (compares to detect errors)
+
+### Manual Method
+
 Edit `src/data/cities.json`:
 
 ```json
@@ -166,7 +189,7 @@ Edit `src/data/cities.json`:
 }
 ```
 
-**Note**: Keys must be lowercase with no spaces.
+**Note**: Keys must be lowercase with spaces preserved (e.g., "new york" not "newyork").
 
 ---
 
@@ -175,12 +198,14 @@ Edit `src/data/cities.json`:
 ### Globe Not Rendering
 - Check browser console for errors
 - Verify all cities exist in `cities.json`
+- Run `npm run fill-cities` to add missing cities automatically
 - Disable ad blockers (unpkg.com resources needed)
 
 ### Unknown Cities Warning
 - City name doesn't match `cities.json`
-- Add missing city to database
-- Use normalized name (lowercase, no spaces)
+- Run `npm run fill-cities` to automatically add missing cities
+- Or manually add city to `cities.json`
+- Use normalized name (lowercase, spaces preserved)
 
 ### Export Fails
 - Ensure at least one participant with valid city

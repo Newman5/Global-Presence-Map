@@ -12,13 +12,25 @@ interface Participant {
 /**
  * Globe Page - Main UI for creating and visualizing meeting maps
  * 
- * Workflow:
- * 1. User enters meeting name and participant list (format: "Name, City")
- * 2. Click "Render Globe" to create meeting and visualize
- * 3. Click "Export Globe" to save as standalone HTML file
- * 4. Click "Clear" to reset and create another meeting
+ * This is the primary user interface for the Global Presence Map application.
+ * Users can create meetings, visualize participants on a 3D globe, and export
+ * the visualization as a standalone HTML file.
+ * 
+ * User Workflow:
+ * 1. Enter optional meeting name
+ * 2. Add participants in "Name, City" format (one per line)
+ * 3. Click "Render Globe" to create meeting and show visualization
+ * 4. Click "Export Globe" to save as standalone HTML file
+ * 5. Click "Clear" to reset and create another meeting
+ * 
+ * Architecture:
+ * - Client-side validation for unknown cities
+ * - Server-side persistence via /api/meetings
+ * - Real-time 3D visualization with react-globe.gl
+ * - Self-contained HTML exports with embedded coordinates
  */
 export default function GlobePage() {
+    // ===== Component State =====
     const [unknownCities, setUnknownCities] = useState<string[]>([]);
     const [inputText, setInputText] = useState('');
     const [participants, setParticipants] = useState<Participant[]>([]);
@@ -26,9 +38,16 @@ export default function GlobePage() {
     const [meetingName, setMeetingName] = useState('');
     const [lastExportUrl, setLastExportUrl] = useState<string | null>(null);
 
+    // ===== Event Handlers =====
+    
     /**
      * Creates a new meeting with participants via API
-     * Validates cities and displays the globe visualization
+     * 
+     * Workflow:
+     * 1. Parse and validate participant input
+     * 2. Check for unknown cities (client-side)
+     * 3. POST to /api/meetings (server creates members + meeting)
+     * 4. Update state to trigger globe rendering
      */
     async function handleRender() {
         setLoading(true);
@@ -68,7 +87,11 @@ export default function GlobePage() {
 
     /**
      * Exports current globe as standalone HTML file
-     * Tries to save to server first, falls back to browser download
+     * 
+     * Export Strategy:
+     * 1. Build self-contained HTML with embedded coordinates
+     * 2. Try to save to server (for GitHub Pages hosting)
+     * 3. Fall back to browser download if server save fails
      */
     async function handleExport() {
         if (participants.length === 0) {
@@ -91,10 +114,12 @@ export default function GlobePage() {
         }
     }
 
+    // ===== Render =====
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-4">
             <h1 className="text-3xl font-bold mb-4">🌍 Global Presence Map</h1>
             
+            {/* Meeting Name Input */}
             <input
                 type="text"
                 value={meetingName}
@@ -103,6 +128,7 @@ export default function GlobePage() {
                 className="w-full max-w-xl p-2 rounded bg-gray-800 text-white placeholder-gray-500"
             />
             
+            {/* Participant Input Textarea */}
             <textarea
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
@@ -110,6 +136,7 @@ export default function GlobePage() {
                 className="w-full max-w-xl h-48 p-3 rounded bg-gray-800 text-white mb-4"
             />
             
+            {/* Action Buttons */}
             <div className="flex gap-4">
                 <button
                     onClick={handleRender}
@@ -138,6 +165,7 @@ export default function GlobePage() {
                 </button>
             </div>
 
+            {/* Export Link */}
             {lastExportUrl && (
                 <div className="mt-6">
                     <a
@@ -151,6 +179,7 @@ export default function GlobePage() {
                 </div>
             )}
 
+            {/* Globe Visualization */}
             {participants.length > 0 && (
                 <div className="flex w-full justify-center mt-6">
                     <div className="w-full max-w-5xl aspect-video sm:aspect-[16/9] rounded-lg overflow-hidden shadow-lg">
@@ -159,9 +188,10 @@ export default function GlobePage() {
                 </div>
             )}
             
+            {/* Unknown Cities Warning */}
             {unknownCities.length > 0 && (
                 <p className="text-red-400 mt-2">
-                    Unknown cities: {unknownCities.join(', ')}
+                    Unknown cities: {unknownCities.join(', ')} — Run `npm run fill-cities` to add them automatically
                 </p>
             )}
         </main>
