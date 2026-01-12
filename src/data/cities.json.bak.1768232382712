@@ -27,13 +27,6 @@
     "lng": 13.3951,
     "countryCode": "DE"
   },
-  "bob": {
-    "normalizedName": "bob",
-    "displayName": "Bob",
-    "lat": -16.4443,
-    "lng": -151.7526,
-    "countryCode": "FR"
-  },
   "boston": {
     "normalizedName": "boston",
     "displayName": "Boston",

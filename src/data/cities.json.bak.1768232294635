@@ -27,13 +27,6 @@
     "lng": 13.3951,
     "countryCode": "DE"
   },
-  "bob": {
-    "normalizedName": "bob",
-    "displayName": "Bob",
-    "lat": -16.4443,
-    "lng": -151.7526,
-    "countryCode": "FR"
-  },
   "boston": {
     "normalizedName": "boston",
     "displayName": "Boston",
@@ -117,13 +110,6 @@
     "lat": 22.3511,
     "lng": 78.6677,
     "countryCode": "IN"
-  },
-  "jerryville": {
-    "normalizedName": "jerryville",
-    "displayName": "Jerryville",
-    "lat": 38.4257,
-    "lng": -80.3112,
-    "countryCode": "US"
   },
   "kenya": {
     "normalizedName": "kenya",

@@ -1,0 +1,275 @@
+{
+  "taipei": {
+    "normalizedName": "taipei",
+    "displayName": "Taipei",
+    "lat": 25.033,
+    "lng": 121.565,
+    "countryCode": "TW"
+  },
+  "bangalore": {
+    "normalizedName": "bangalore",
+    "displayName": "Bangalore",
+    "lat": 12.9716,
+    "lng": 77.5946,
+    "countryCode": "IN"
+  },
+  "new york": {
+    "normalizedName": "new york",
+    "displayName": "New York",
+    "lat": 40.7127,
+    "lng": -74.006,
+    "countryCode": "US"
+  },
+  "london": {
+    "normalizedName": "london",
+    "displayName": "London",
+    "lat": 51.5072,
+    "lng": -0.1276,
+    "countryCode": "GB"
+  },
+  "tokyo": {
+    "normalizedName": "tokyo",
+    "displayName": "Tokyo",
+    "lat": 35.6762,
+    "lng": 139.6503,
+    "countryCode": "JP"
+  },
+  "paris": {
+    "normalizedName": "paris",
+    "displayName": "Paris",
+    "lat": 48.8566,
+    "lng": 2.3522,
+    "countryCode": "FR"
+  },
+  "sydney": {
+    "normalizedName": "sydney",
+    "displayName": "Sydney",
+    "lat": -33.8688,
+    "lng": 151.2093,
+    "countryCode": "AU"
+  },
+  "nairobi": {
+    "normalizedName": "nairobi",
+    "displayName": "Nairobi",
+    "lat": -1.286389,
+    "lng": 36.817223,
+    "countryCode": "KE"
+  },
+  "lagos": {
+    "normalizedName": "lagos",
+    "displayName": "Lagos",
+    "lat": 6.5244,
+    "lng": 3.3792,
+    "countryCode": "NG"
+  },
+  "san francisco": {
+    "normalizedName": "san francisco",
+    "displayName": "San Francisco",
+    "lat": 37.7793,
+    "lng": -122.4193,
+    "countryCode": "US"
+  },
+  "toronto": {
+    "normalizedName": "toronto",
+    "displayName": "Toronto",
+    "lat": 43.6532,
+    "lng": -79.3832,
+    "countryCode": "CA"
+  },
+  "berlin": {
+    "normalizedName": "berlin",
+    "displayName": "Berlin",
+    "lat": 52.5174,
+    "lng": 13.3951,
+    "countryCode": "DE"
+  },
+  "delhi": {
+    "normalizedName": "delhi",
+    "displayName": "Delhi",
+    "lat": 28.6328,
+    "lng": 77.2198,
+    "countryCode": "IN"
+  },
+  "boston": {
+    "normalizedName": "boston",
+    "displayName": "Boston",
+    "lat": 42.3554,
+    "lng": -71.0605,
+    "countryCode": "US"
+  },
+  "vancouver": {
+    "normalizedName": "vancouver",
+    "displayName": "Vancouver",
+    "lat": 49.2609,
+    "lng": -123.114,
+    "countryCode": "CA"
+  },
+  "vietnam": {
+    "normalizedName": "vietnam",
+    "displayName": "Vietnam",
+    "lat": 15.9267,
+    "lng": 107.9651,
+    "countryCode": "VN"
+  },
+  "nigeria": {
+    "normalizedName": "nigeria",
+    "displayName": "Nigeria",
+    "lat": 9.6,
+    "lng": 8.0,
+    "countryCode": "NG"
+  },
+  "portugal": {
+    "normalizedName": "portugal",
+    "displayName": "Portugal",
+    "lat": 39.6622,
+    "lng": -8.1354,
+    "countryCode": "PT"
+  },
+  "india": {
+    "normalizedName": "india",
+    "displayName": "India",
+    "lat": 22.3511,
+    "lng": 78.6677,
+    "countryCode": "IN"
+  },
+  "columbia": {
+    "normalizedName": "columbia",
+    "displayName": "Columbia",
+    "lat": 4.0999,
+    "lng": -72.9088,
+    "countryCode": "CO"
+  },
+  "scotland": {
+    "normalizedName": "scotland",
+    "displayName": "Scotland",
+    "lat": 56.7861,
+    "lng": -4.1141,
+    "countryCode": "GB"
+  },
+  "nowhere": {
+    "normalizedName": "nowhere",
+    "displayName": "Nowhere",
+    "lat": 35.1592,
+    "lng": -98.4423,
+    "countryCode": "US"
+  },
+  "estonia": {
+    "normalizedName": "estonia",
+    "displayName": "Estonia",
+    "lat": 58.7524,
+    "lng": 25.3319,
+    "countryCode": "EE"
+  },
+  "spain": {
+    "normalizedName": "spain",
+    "displayName": "Spain",
+    "lat": 39.3261,
+    "lng": -4.838,
+    "countryCode": "ES"
+  },
+  "tallinn": {
+    "normalizedName": "tallinn",
+    "displayName": "Tallinn",
+    "lat": 59.4372,
+    "lng": 24.7573,
+    "countryCode": "EE"
+  },
+  "prince of wales island": {
+    "normalizedName": "prince of wales island",
+    "displayName": "Prince Of Wales Island",
+    "lat": 55.631944,
+    "lng": -132.9075,
+    "countryCode": "US"
+  },
+  "forest grove": {
+    "normalizedName": "forest grove",
+    "displayName": "Forest Grove",
+    "lat": 45.519,
+    "lng": -123.1111,
+    "countryCode": "US"
+  },
+  "oregon": {
+    "normalizedName": "oregon",
+    "displayName": "Oregon",
+    "lat": 43.9793,
+    "lng": -120.7373,
+    "countryCode": "US"
+  },
+  "houston": {
+    "normalizedName": "houston",
+    "displayName": "Houston",
+    "lat": 29.7589,
+    "lng": -95.3677,
+    "countryCode": "US"
+  },
+  "cleveland": {
+    "normalizedName": "cleveland",
+    "displayName": "Cleveland",
+    "lat": 41.4997,
+    "lng": -81.6937,
+    "countryCode": "US"
+  },
+  "miami": {
+    "normalizedName": "miami",
+    "displayName": "Miami",
+    "lat": 25.7742,
+    "lng": -80.1936,
+    "countryCode": "US"
+  },
+  "houstville": {
+    "normalizedName": "houstville",
+    "displayName": "Houstville",
+    "lat": 29.7589,
+    "lng": -95.3677,
+    "countryCode": "US"
+  },
+  "hyderabad": {
+    "normalizedName": "hyderabad",
+    "displayName": "Hyderabad",
+    "lat": 17.3606,
+    "lng": 78.4741,
+    "countryCode": "IN"
+  },
+  "ann arbor": {
+    "normalizedName": "ann arbor",
+    "displayName": "Ann Arbor",
+    "lat": 42.2814,
+    "lng": -83.7485,
+    "countryCode": "US"
+  },
+  "cameroon": {
+    "normalizedName": "cameroon",
+    "displayName": "Cameroon",
+    "lat": 4.6126,
+    "lng": 13.1536,
+    "countryCode": "CM"
+  },
+  "lisbon": {
+    "normalizedName": "lisbon",
+    "displayName": "Lisbon",
+    "lat": 38.7078,
+    "lng": -9.1366,
+    "countryCode": "PT"
+  },
+  "east lansing": {
+    "normalizedName": "east lansing",
+    "displayName": "East Lansing",
+    "lat": 42.732,
+    "lng": -84.4722,
+    "countryCode": "US"
+  },
+  "kenya": {
+    "normalizedName": "kenya",
+    "displayName": "Kenya",
+    "lat": 1.442,
+    "lng": 38.4314,
+    "countryCode": "KE"
+  },
+  "south africa": {
+    "normalizedName": "south africa",
+    "displayName": "South Africa",
+    "lat": -28.8166,
+    "lng": 24.9916,
+    "countryCode": "ZA"
+  }
+}
