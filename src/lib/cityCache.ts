@@ -9,7 +9,7 @@
  * Phase 2 Improvement: Uses cities.json as single source of truth
  */
 
-import { getCityByName, getCityCoordinates, getAllCities, cityExists } from './cities';
+import { getCityCoordinates, getAllCities, cityExists } from './cities';
 import type { CityCoord } from './validation';
 
 /**

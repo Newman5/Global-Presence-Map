@@ -18,7 +18,6 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { generateId } from './uuid';
 import { validateMeeting, type Meeting } from './validation';
 
 const meetingsDir = path.join(process.cwd(), 'src', 'data', 'meetings');
@@ -86,7 +85,7 @@ export function loadMeeting(meetingId: string): Meeting | null {
 
   try {
     const content = fs.readFileSync(filePath, 'utf8');
-    const data = JSON.parse(content);
+    const data: unknown = JSON.parse(content);
     return validateMeeting(data);
   } catch (error) {
     console.error(`Error loading meeting ${meetingId}:`, error);

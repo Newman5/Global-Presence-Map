@@ -16,9 +16,8 @@
 import fs from 'fs';
 import path from 'path';
 import { generateId } from './uuid';
-import { safeValidateMembers, validateMember, type Member } from './validation';
+import { safeValidateMembers, type Member } from './validation';
 import { normalizeInput } from './normalize';
-import { getCityLookupResult } from './cityCache';
 
 const membersFilePath = path.join(process.cwd(), 'src', 'data', 'members.json');
 
@@ -163,5 +162,5 @@ export function findOrCreateMember(name: string, city: string): Member {
  */
 export function getMembersByIds(ids: string[]): Member[] {
   const members = loadMembers();
-  return ids.map(id => members.find(m => m.id === id)).filter((m): m is Member => m !== undefined && m.id !== undefined);
+  return ids.map(id => members.find(m => m?.id === id)).filter((m): m is Member => m?.id !== undefined);
 }

@@ -19,7 +19,7 @@ import { type City } from './validation';
 // ===== In-Memory Cache =====
 // Stores cities loaded from cities.json for fast lookups
 // Initialized on first access, persists for application lifetime
-const citiesCache: Map<string, City> = new Map();
+const citiesCache: Map<string, City> = new Map<string, City>();
 
 // ===== Normalization Utilities =====
 /**

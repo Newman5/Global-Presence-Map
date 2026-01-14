@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   try {
     // ===== Input Validation =====
     // Parse and validate the request body against schema
-    const body = await request.json();
+    const body: unknown = await request.json();
     const validatedInput = validateCreateMeetingInput(body);
     const { title, participants } = validatedInput;
 
