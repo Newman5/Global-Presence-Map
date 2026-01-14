@@ -13,13 +13,6 @@
     "lng": -80.1009,
     "countryCode": "US"
   },
-  "austria": {
-    "normalizedName": "austria",
-    "displayName": "Austria",
-    "lat": 47.594,
-    "lng": 14.1246,
-    "countryCode": "AT"
-  },
   "bangalore": {
     "normalizedName": "bangalore",
     "displayName": "Bangalore",
@@ -97,13 +90,6 @@
     "lng": -123.1111,
     "countryCode": "US"
   },
-  "graz": {
-    "normalizedName": "graz",
-    "displayName": "Graz",
-    "lat": 47.0709,
-    "lng": 15.4383,
-    "countryCode": "AT"
-  },
   "houston": {
     "normalizedName": "houston",
     "displayName": "Houston",
@@ -159,13 +145,6 @@
     "lat": 6.5244,
     "lng": 3.3792,
     "countryCode": "NG"
-  },
-  "lansing": {
-    "normalizedName": "lansing",
-    "displayName": "Lansing",
-    "lat": 42.7338,
-    "lng": -84.5546,
-    "countryCode": "US"
   },
   "lisbon": {
     "normalizedName": "lisbon",
