@@ -1,11 +1,4 @@
 {
-  "angouleme": {
-    "normalizedName": "angouleme",
-    "displayName": "Angouleme",
-    "lat": 45.6485,
-    "lng": 0.1562,
-    "countryCode": "FR"
-  },
   "ann arbor": {
     "normalizedName": "ann arbor",
     "displayName": "Ann Arbor",
@@ -188,13 +181,6 @@
     "lng": -0.1276,
     "countryCode": "GB"
   },
-  "manizales": {
-    "normalizedName": "manizales",
-    "displayName": "Manizales",
-    "lat": 5.0744,
-    "lng": -75.5081,
-    "countryCode": "CO"
-  },
   "miami": {
     "normalizedName": "miami",
     "displayName": "Miami",
@@ -208,13 +194,6 @@
     "lat": -1.286389,
     "lng": 36.817223,
     "countryCode": "KE"
-  },
-  "new delhi": {
-    "normalizedName": "new delhi",
-    "displayName": "New Delhi",
-    "lat": 28.6139,
-    "lng": 77.209,
-    "countryCode": "IN"
   },
   "new york": {
     "normalizedName": "new york",
@@ -341,12 +320,5 @@
     "lat": 15.9267,
     "lng": 107.9651,
     "countryCode": "VN"
-  },
-  "worcester": {
-    "normalizedName": "worcester",
-    "displayName": "Worcester",
-    "lat": 42.2626,
-    "lng": -71.8019,
-    "countryCode": "US"
   }
 }
